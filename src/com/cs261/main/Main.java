@@ -72,7 +72,7 @@ public class Main {
             } finally {
                 gp.repaint();
             }
-            i += 1;
+            i++;
         }
     }
 }
