@@ -22,102 +22,57 @@ public class Main {
         f.setLocationByPlatform(true);
         f.setVisible(true);
 
-        String file = args[0];
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line = br.readLine();
-            String[] lineSplit;
-            int done = 0;
-            int prevMinute = 0;
-            int cntr = 0;
-            Node prevNode = null;
+        int i = 0;
+        while (i < (args.length - (args.length % 3)) / 3) {
+            String file = args[3*i];
+            gp.setColour(new Color(Integer.parseInt(args[3*i + 2], 16)));
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line = br.readLine();
+                String[] lineSplit;
+                int done = 0;
+                int prevMinute = 0;
+                int cntr = 0;
+                Node prevNode = null;
 
-            line = br.readLine(); //Yes, that's two.
-            while (line != null) {
-                lineSplit = line.split(",");
-                int hours = Integer.parseInt(lineSplit[0].substring(11, 13));
-                int minutes = Integer.parseInt(lineSplit[0].substring(14, 16));
-                int seconds = Integer.parseInt(lineSplit[0].substring(17, 19));
+                line = br.readLine(); //Yes, that's two.
+                while (line != null) {
+                    lineSplit = line.split(",");
+                    int hours = Integer.parseInt(lineSplit[0].substring(11, 13));
+                    int minutes = Integer.parseInt(lineSplit[0].substring(14, 16));
+                    int seconds = Integer.parseInt(lineSplit[0].substring(17, 19));
 
-                int curMinute = hours * 60 + minutes;
+                    int curMinute = hours * 60 + minutes;
 
-                if (curMinute == prevMinute) {
-                    cntr++;
-                } else {
-                    int x = (int) (gp.getWidth() * (curMinute / 1440.0));
-                    int y = gp.getHeight() - (cntr * Integer.parseInt(args[2]));
-                    if (x > gp.getWidth()) {
-                        x = gp.getWidth();
+                    if (curMinute == prevMinute) {
+                        cntr++;
+                    } else {
+                        int x = (int) (gp.getWidth() * (curMinute / 1440.0));
+                        int y = gp.getHeight() - (cntr * Integer.parseInt(args[3*i + 1]));
+                        if (x > gp.getWidth()) {
+                            x = gp.getWidth();
+                        }
+                        if (y < 0) {
+                            y = 0;
+                        }
+                        Node curNode = gp.newNode(x, y);
+                        System.out.println("Added node " + done++ + " at [" + x + "," + y + "]");
+                        if (prevNode != null) {
+                            gp.newEdge(prevNode, curNode);
+                        }
+                        prevNode = curNode;
+                        cntr = 0;
+                        prevMinute = curMinute;
                     }
-                    if (y < 0) {
-                        y = 0;
-                    }
-                    Node curNode = gp.newNode(x, y);
-                    System.out.println("Added node " + done++ + " at [" + x + "," + y + "]");
-                    if (prevNode != null) {
-                        gp.newEdge(prevNode, curNode);
-                    }
-                    prevNode = curNode;
-                    cntr = 0;
-                    prevMinute = curMinute;
+
+                    line = br.readLine();
                 }
-
-                line = br.readLine();
+            } catch (IOException e) {
+                System.err.println(e.toString());
+            } finally {
+                gp.repaint();
             }
-        } catch (IOException e) {
-            System.err.println(e.toString());
-        } finally {
-            gp.repaint();
-        }
-
-        gp.setColour(Color.blue);
-        file = args[1];
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line = br.readLine();
-            String[] lineSplit;
-            int done = 0;
-            int prevMinute = 0;
-            int cntr = 0;
-            Node prevNode = null;
-
-            line = br.readLine(); //Yes, that's two.
-            while (line != null) {
-                lineSplit = line.split(",");
-                int hours = Integer.parseInt(lineSplit[0].substring(11, 13));
-                int minutes = Integer.parseInt(lineSplit[0].substring(14, 16));
-                int seconds = Integer.parseInt(lineSplit[0].substring(17, 19));
-
-                int curMinute = hours * 60 + minutes;
-
-                if (curMinute == prevMinute) {
-                    cntr++;
-                } else {
-                    int x = (int) (gp.getWidth() * (curMinute / 1440.0));
-                    int y = gp.getHeight() - (cntr * Integer.parseInt(args[2]));
-                    if (x > gp.getWidth()) {
-                        x = gp.getWidth();
-                    }
-                    if (y < 0) {
-                        y = 0;
-                    }
-                    Node curNode = gp.newNode(x, y);
-                    System.out.println("Added node " + done++ + " at [" + x + "," + y + "]");
-                    if (prevNode != null) {
-                        gp.newEdge(prevNode, curNode);
-                    }
-                    prevNode = curNode;
-                    cntr = 0;
-                    prevMinute = curMinute;
-                }
-
-                line = br.readLine();
-            }
-        } catch (IOException e) {
-            System.err.println(e.toString());
-        } finally {
-            gp.repaint();
+            i += 1;
         }
     }
 }
