@@ -10,15 +10,17 @@ public class Analyser {
 
     /**
      * The method which runs analysis on the current graph, using the supplied query
+     *
      * @param query The query to run
      * @return true if success, false if failure
      */
     public boolean analyse(String query) {
+        //Do stuff
         return false;
     }
 
-    public void addNode(String name, int x, int y) {
-        Node tempNode = new Node(name, x, y);
+    public void addNode(String name, String content, int x, int y) {
+        Node tempNode = new Node(name, content, x, y);
         graph.addNode(tempNode);
     }
 

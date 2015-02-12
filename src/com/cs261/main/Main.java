@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class Main {
 // Implements runnable to allow the chamge of threads run code.
-    
+
     public static void main(String[] args) throws IOException {
         Thread Tradethread = new Thread(new TradesThread()); // Creates new thread.
         Thread Commsthread = new Thread(new CommsThread()); // Creates new thread.
