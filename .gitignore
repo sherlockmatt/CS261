@@ -13,9 +13,8 @@
 hs_err_pid*
 
 # IDEA ignore list
-.idea
-*.iml
-*.ipr
+**/.idea/workspace.xml
+**/.idea/tasks.xml
 *.iws
 
 # Git ignore list
