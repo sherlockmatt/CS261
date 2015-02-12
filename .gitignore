@@ -16,6 +16,7 @@ hs_err_pid*
 .idea
 *.iml
 *.ipr
+*.iws
 
 # Git ignore list
 .git
