@@ -1,11 +1,15 @@
 package com.cs261.analysis;
 
+import java.util.List;
+
 public class Analyser {
 
     private Graph graph;
+    private int radius;
 
-    public Analyser() {
-        graph = new Graph();
+    public Analyser(int radius) {
+        this.graph = new Graph();
+        this.radius = radius;
     }
 
     /**
@@ -20,13 +24,14 @@ public class Analyser {
     }
 
     public void addNode(String name, String content, int x, int y) {
-        Node tempNode = new Node(name, content, x, y);
-        graph.addNode(tempNode);
+        graph.addNode(name, content, x, y, this.radius);
     }
 
-    public void addEdge(Node n1, Node n2) {
-        Edge tempEdge = new Edge(n1, n2);
-        graph.addEdge(tempEdge);
+    public List<Node> getNodesInRadius(Node node, int radius) {
+        return graph.getNodesInRadius(node, radius);
     }
 
+    public void updateRadius(int radius) {
+        this.radius = radius;
+    }
 }

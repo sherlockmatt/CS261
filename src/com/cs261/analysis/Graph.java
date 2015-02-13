@@ -1,21 +1,35 @@
 package com.cs261.analysis;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Graph {
 
     private List<Node> nodes;
-    private List<Edge> edges;
+    private int cntr = 0;
 
     public Graph() {
-
+        nodes = new ArrayList<Node>();
     }
 
-    public void addNode(Node node) {
-        nodes.add(node);
+    public void addNode(String name, String content, int x, int y, int radius) {
+        Node n1 = new Node(cntr++, name, content, x, y);
+        nodes.add(n1);
+        for (Node n2 : getNodesInRadius(n1, radius)) {
+            n1.addEdge(n2);
+            n2.addEdge(n1);
+        }
     }
 
-    public void addEdge(Edge edge) {
-        edges.add(edge);
+    public List<Node> getNodesInRadius(Node node, int radius) {
+        List<Node> tempNodes = new ArrayList<Node>();
+        for (int i = 0; i < cntr; i++) {
+            Node tempNode = nodes.get(i);
+            if (Math.sqrt((node.getX() - tempNode.getX())^2 + (node.getY() - tempNode.getY())^2) <= radius) {
+                tempNodes.add(tempNode);
+            }
+        }
+        return tempNodes;
     }
+
 }
