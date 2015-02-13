@@ -32,4 +32,10 @@ public class Graph {
         return tempNodes;
     }
 
+    public List<Node> getConnected(Node node) {
+        return node.getConnected();
+    }
+
+    public int getCount() { return cntr; }
+
 }

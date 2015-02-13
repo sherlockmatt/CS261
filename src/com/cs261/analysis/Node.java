@@ -25,6 +25,10 @@ public class Node {
         edges.add(node);
     }
 
+    public List<Node> getConnected() {
+        return edges;
+    }
+
     public int getX() { return this.x; }
     public int getY() { return this.y; }
     public String getName() { return this.name; }
