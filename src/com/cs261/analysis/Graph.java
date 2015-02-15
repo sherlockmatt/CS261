@@ -21,6 +21,10 @@ public class Graph {
         }
     }
 
+    public List<Node> getAllNodes() {
+        return nodes;
+    }
+
     public List<Node> getNodesInRadius(Node node, int radius) {
         List<Node> tempNodes = new ArrayList<Node>();
         for (int i = 0; i < cntr; i++) {
