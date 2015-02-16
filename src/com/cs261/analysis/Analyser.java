@@ -56,7 +56,7 @@ public class Analyser {
     }
 
     public void addNode(String name, String content, int x, int y) {
-        this.graph.addNode(name, content, x, y, this.radius);
+        this.graph.addNode(name, content, x, y, this.radius); //sdfsf
     }
 
     public void addNode(String name, String content, int x, int y, int radius) {
