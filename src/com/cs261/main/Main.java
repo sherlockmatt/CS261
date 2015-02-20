@@ -1,4 +1,4 @@
-package mainCode;
+package com.cs261.main;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
