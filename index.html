@@ -6,9 +6,13 @@
 		<link rel="stylesheet" href="se.css" type="text/css" />
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script type="text/javascript" charset="utf-8"></script>
+		
+	
+
+		
 	</head>
 	<body>
-	<?php include 'vars.php'; ?>
+	<?php include 'submit.php'; ?>
 	<div class="header">
 		<img class="DB-logo" src="DB.gif" alt="Deutsche Bank Logo">
 		<div class="header-writing">
@@ -17,33 +21,15 @@
 	</div>
 	<div class="query-builder" id="alert" >
 	
-	<form>
+	
 	<h3>Query Builder:</h3>
 		<select id="type" class='inputstyle' style='width:260px; margin-left:15px; margin-right:15px;'>
 			<option value="" disabled selected>Select Trades or Communications</option>
 			<option value='Trades'>Trades</option>
-			<option value="Communications">Communications</option>
+			<option value='Communications'>Communications</option>
 		</select>
-		<script>
-		$(document).ready(function() {
-
-    $("#type").change(function() {
-        var val = $(this).val();
-        if (val == "Trades") {
-            $("#size").html("<option value='test'>Trade 1</option><option value='test2'>Trade 2</option>");
-        } else if (val == "Communications") {
-            $("#size").html("<option value='test'>Trader 1</option><option value='test2'>Trader 2</option>");
-
-
-        }
-    });
-
-
-});
-		</script>                            
-		<select id="size" class='inputstyle' style='width:260px; margin-left:15px; margin-right:15px;'>
-		<option value="" disabled selected>Select Trades/Communications</option>
-		</select>
+                       
+		
 		<select class='inputstyle' style='width:260px; margin-left:15px; margin-right:15px;'>
 			<option value="" disabled selected>Select Date</option>
 			<option value='today'>
@@ -171,8 +157,25 @@
 			<option value='trades'>23.00 - 24.00</option>
 			
 		</select>
+		
+			
 			<input class='submitbutton' type='submit' value='Submit'>
-		</form>
+		
+		<script>
+		
+			$('.submitbutton').click(function(){
+        			var Type = $("#type option:selected").text();
+        			
+       			        var ajaxurl = 'submit.php';
+        			 var data =  {'type': Type};
+		        	$.post(ajaxurl, data, function (response) {
+           		 
+           		 	$('.query-form').html(response);
+           			 
+        			});
+    			});
+		
+		</script>
 	
 	</div>
 	<div class="query-builder-footer">
@@ -252,18 +255,10 @@
 	
 
 	<div class="query-form">
-	<?php readTrades(); ?>
-	<br>
-	<br>
+	
+	
 
 	
-	table for trades: time, buyer, seller, price, currency, size, symbol, sector, bid, ask
-	<br> 
-	OR <br>
-	<br>
-	table for communications: time, sender, recipients 
-
-
 
 
 
