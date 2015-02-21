@@ -9,9 +9,9 @@ html, body {
 	position: fixed;
 	overflow: auto;
 	bottom: 0px;
-	top:360px;
+	top:330px;
 	width: 320px;
-	height: calc(100% - 360px);
+	height: calc(100% - 330px);
 	border: 0px;
 	margin: 0px;
 	padding: 0px;
@@ -25,7 +25,7 @@ html, body {
 	position: fixed;
 	top:100px;
 	width: 320px;
-	height: 255px;
+	height: 225px;
 	border: 0px;
 	margin: 0 auto;
 	padding: 0px;
@@ -35,7 +35,7 @@ html, body {
 .query-builder-footer {
 	background-color: #424242;
 	position: fixed;
-	top:355px;
+	top:325px;
 	width: 320px;
 	height: 5px;
 	margin: 0 auto;
@@ -71,14 +71,32 @@ html, body {
 	color: #e6e6e6;
 }
 
+table#trades {
+	font-family: 'Century Gothic', sans-serif;
+	border-collapse: collapse;
+	padding: 5px;
+	font-size: 13px;
+}
 
-table, td {
+
+table#comms {
+	font-family: 'Century Gothic', sans-serif;
+	border-collapse: collapse;
+	word-wrap: break-word;
+	max-width: 300px;
+	padding: 5px;
+	font-size: 13px;
+}
+
+table#alerts td {
 	font-family: 'Century Gothic', sans-serif;
 	border-bottom: 1px solid #a4a4a4;
 	border-collapse: collapse;
 	padding: 5px;
 	padding-left: 10px;
 }
+
+
 
 .remove {
 	background-color: transparent;
@@ -101,7 +119,6 @@ table, td {
 	height: calc(100% - 100px);
 	background-color: #ffffff;
 	position: fixed;
-	padding: 20px;
 	text-align: center;
 	margin: 0 auto;
 	overflow: auto;
