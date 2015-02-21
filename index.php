@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+	
+	<title>Software Engineering Project</title>
+		<link rel="stylesheet" href="se.css" type="text/css" />
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script type="text/javascript" charset="utf-8"></script>
+		
+	
+
+		
+	</head>
+	<body>
+	<?php include 'submit.php'; ?>
+	<div class="header">
+		<img class="DB-logo" src="DB.gif" alt="Deutsche Bank Logo">
+		<div class="header-writing">
+			Deutsche Bank Trade Analysis
+		</div>
+	</div>
+	<div class="query-builder" id="alert" >
+	
+	
+	<h3>Query Builder:</h3>
+		<select id="type" class='inputstyle' style='width:260px; margin-left:15px; margin-right:15px;'>
+			<option value="" disabled selected>Select Trades or Communications</option>
+			<option value='Trades'>Trades</option>
+			<option value='Communications'>Communications</option>
+		</select>
+                       
+		
+		<select class='inputstyle' style='width:260px; margin-left:15px; margin-right:15px;'>
+			<option value="" disabled selected>Select Date</option>
+			<option value='today'>
+			 	<script type="text/javascript">
+				var today = new Date();
+				document.write(today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear());
+				</script>
+			</option>
+			<option value='yesterday'>
+			 	<script type="text/javascript">
+				var one = new Date();
+				one.setDate(today.getDate()-1);
+				document.write(one.getDate() + "/" + (one.getMonth()+1) + "/" + one.getFullYear());
+				</script>
+			</option>
+			<option value='2daysago'>
+			 	<script type="text/javascript">
+				var two = new Date();
+				two.setDate(today.getDate()-2);
+				document.write(two.getDate() + "/" + (two.getMonth()+1) + "/" + two.getFullYear());
+				</script>
+			</option>
+			<option value='3daysago'>
+			 	<script type="text/javascript">
+				var three = new Date();
+				three.setDate(today.getDate()-3);
+				document.write(three.getDate() + "/" + (three.getMonth()+1) + "/" + three.getFullYear());
+				</script>
+			</option>
+			<option value='4daysago'>
+			 	<script type="text/javascript">
+				var four = new Date();
+				four.setDate(today.getDate()-4);
+				document.write(four.getDate() + "/" + (four.getMonth()+1) + "/" + four.getFullYear());
+				</script>
+			</option>
+			<option value='5daysago'>
+			 	<script type="text/javascript">
+				var five = new Date();
+				five.setDate(today.getDate()-5);
+				document.write(five.getDate() + "/" + (five.getMonth()+1) + "/" + five.getFullYear());
+				</script>
+			</option>
+			<option value='6daysago'>
+			 	<script type="text/javascript">
+				var six = new Date();
+				six.setDate(today.getDate()-6);
+				document.write(six.getDate() + "/" + (six.getMonth()+1) + "/" + six.getFullYear());
+				</script>
+			</option>
+			<option value='7daysago'>
+			 	<script type="text/javascript">
+				var seven = new Date();
+				seven.setDate(today.getDate()-7);
+				document.write(seven.getDate() + "/" + (seven.getMonth()+1) + "/" + seven.getFullYear());
+				</script>
+			</option>
+			<option value='8daysago'>
+			 	<script type="text/javascript">
+				var eight = new Date();
+				eight.setDate(today.getDate()-8);
+				document.write(eight.getDate() + "/" + (eight.getMonth()+1) + "/" + eight.getFullYear());
+				</script>
+			</option>
+			<option value='9daysago'>
+			 	<script type="text/javascript">
+				var nine = new Date();
+				nine.setDate(today.getDate()-9);
+				document.write(nine.getDate() + "/" + (nine.getMonth()+1) + "/" + nine.getFullYear());
+				</script>
+			</option>
+			<option value='10daysago'>
+			 	<script type="text/javascript">
+				var ten= new Date();
+				ten.setDate(today.getDate()-10);
+				document.write(ten.getDate() + "/" + (ten.getMonth()+1) + "/" + ten.getFullYear());
+				</script>
+			</option>
+			<option value='11daysago'>
+			 	<script type="text/javascript">
+				var eleven = new Date();
+				eleven.setDate(today.getDate()-11);
+				document.write(eleven.getDate() + "/" + (eleven.getMonth()+1) + "/" + eleven.getFullYear());
+				</script>
+			</option>
+			<option value='12daysago'>
+			 	<script type="text/javascript">
+				var twelve = new Date();
+				twelve.setDate(today.getDate()-12);
+				document.write(twelve.getDate() + "/" + (twelve.getMonth()+1) + "/" + twelve.getFullYear());
+				</script>
+			</option>
+			<option value='13daysago'>
+			 	<script type="text/javascript">
+				var thirteen= new Date();
+				thirteen.setDate(today.getDate()-13);
+				document.write(thirteen.getDate() + "/" + (thirteen.getMonth()+1) + "/" + thirteen.getFullYear());
+				</script>
+			</option>
+		</select> 
+		<select class='inputstyle' style='width:260px; margin-left:15px; margin-right:15px;'>
+			<option value="" disabled selected>Select Time</option>
+			<option value='trades'>01.00 - 02.00</option>
+			<option value='trades'>02.00 - 03.00</option>
+			<option value='trades'>03.00 - 04.00</option>
+			<option value='trades'>04.00 - 05.00</option>
+			<option value='trades'>05.00 - 06.00</option>
+			<option value='trades'>06.00 - 07.00</option>
+			<option value='trades'>07.00 - 08.00</option>
+			<option value='trades'>08.00 - 09.00</option>
+			<option value='trades'>09.00 - 10.00</option>
+			<option value='trades'>10.00 - 11.00</option>
+			<option value='trades'>11.00 - 12.00</option>
+			<option value='trades'>12.00 - 13.00</option>
+			<option value='trades'>13.00 - 14.00</option>
+			<option value='trades'>14.00 - 15.00</option>
+			<option value='trades'>15.00 - 16.00</option>
+			<option value='trades'>16.00 - 17.00</option>
+			<option value='trades'>17.00 - 18.00</option>
+			<option value='trades'>18.00 - 19.00</option>
+			<option value='trades'>19.00 - 20.00</option>
+			<option value='trades'>20.00 - 21.00</option>
+			<option value='trades'>21.00 - 22.00</option>
+			<option value='trades'>22.00 - 23.00</option>
+			<option value='trades'>23.00 - 24.00</option>
+			
+		</select>
+		
+			
+			<input class='submitbutton' type='submit' value='Submit'>
+		
+		<script>
+		
+			$('.submitbutton').click(function(){
+        			var Type = $("#type option:selected").text();
+        			
+       			        var ajaxurl = 'submit.php';
+        			 var data =  {'type': Type};
+		        	$.post(ajaxurl, data, function (response) {
+           		 
+           		 	$('.query-form').html(response);
+           			 
+        			});
+    			});
+		
+		</script>
+	
+	</div>
+	<div class="query-builder-footer">
+	</div>
+	
+	<div class="alert-feed" id="alert" >
+
+	
+
+		<table id="alerts" style="width:100%;">
+	        <tr>
+	            <td>Alert 1 <br> <h2>Information about this alert</h2></td>
+	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
+	        </tr>
+	        <tr>
+	            <td>Alert 2 <br> <h2>Information about this alert</h2></td>
+	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
+	        </tr>
+	        <tr>
+	            <td>Alert 3 <br> <h2>Information about this alert</h2></td>
+	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
+	        </tr>
+	        <tr>
+	            <td>Alert 4 <br> <h2>Information about this alert</h2></td>
+	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
+	        </tr>
+	        <tr>
+	            <td>Alert 5 <br> <h2>Information about this alert</h2></td>
+	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
+	        </tr>
+	        <tr>
+	            <td>Alert 6 <br> <h2>Information about this alert</h2></td>
+	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
+	        </tr>
+	        <tr>
+	            <td>Alert 7 <br> <h2>Information about this alert</h2></td>
+	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
+	        </tr>
+	        <tr>
+	            <td>Alert 8 <br> <h2>Information about this alert</h2></td>
+	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
+	        </tr>
+	        <tr>
+	            <td>Alert 9 <br> <h2>Information about this alert</h2></td>
+	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
+	        </tr>
+	        <tr>
+	            <td>Alert 10 <br> <h2>Information about this alert</h2></td>
+	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
+	        </tr>
+	        <tr>
+	            <td>Alert 11 <br> <h2>Information about this alert</h2></td>
+	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
+	        </tr>
+	        <tr>
+	            <td>Alert 12 <br> <h2>Information about this alert</h2></td>
+	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
+	        </tr>
+	        <tr>
+	            <td>Alert 13 <br> <h2>Information about this alert</h2></td>
+	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
+	        </tr>
+	        <tr>
+	            <td>Alert 14 <br> <h2>Information about this alert</h2></td>
+	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
+	        </tr>
+	        </table>
+	        
+	        
+	        
+	        <script>
+			$('input[type="button"]').click(function(e){
+		   	$(this).closest('tr').remove()
+			})
+		</script>
+	</div>
+	
+
+	<div class="query-form">
+	
+	
+
+	
+
+
+
+	</div>
+
+	
+	
+	
+	</body>
+	</html>
