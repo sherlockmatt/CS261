@@ -32,22 +32,22 @@ public class Main {
 	  String dateStr = dateFormatForCheck.format(cutoffdate);
 	  System.out.println("Cut off date " + dateStr);
 	  
-	  File TooOldTrade = new File("tradesstore" + dateStr + ".csv");
-	  System.out.println("Searching for tradesstore" + dateStr + ".csv");
-	  File TooOldComm = new File("commsstore" + dateStr + ".csv");
-	  System.out.println("Searching for commsstore" + dateStr + ".csv");
+	  File TooOldTrade = new File(dateStr + "tradesstore" + ".csv");
+	  System.out.println("Searching for " + dateStr + "tradesstore.csv");
+	  File TooOldComm = new File(dateStr + "commsstore" + ".csv");
+	  System.out.println("Searching for " + dateStr + "commsstore.csv");
 	  boolean DoesExistTrade = TooOldTrade.exists();
 	  boolean DoesExistComm = TooOldComm.exists();
 	  
 	  if (DoesExistTrade)
 		{
 		  TooOldTrade.delete();
-		  System.out.println("Deleting tradesstore" + dateStr + ".csv");
+		  System.out.println("Deleting " + dateStr + "tradesstore.csv");
 		}
 	  if (DoesExistComm)
 		{
 		  TooOldComm.delete();
-		  System.out.println("Deleting commsstore" + dateStr + ".csv");
+		  System.out.println("Deleting " + dateStr + "commsstore.csv");
 		}
 	  
 	  
