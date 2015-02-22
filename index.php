@@ -182,66 +182,8 @@
 	</div>
 	
 	<div class="alert-feed" id="alert" >
-
-	
-
 		<table id="alerts" style="width:100%;">
-	        <tr>
-	            <td>Alert 1 <br> <h2>Information about this alert</h2></td>
-	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
-	        </tr>
-	        <tr>
-	            <td>Alert 2 <br> <h2>Information about this alert</h2></td>
-	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
-	        </tr>
-	        <tr>
-	            <td>Alert 3 <br> <h2>Information about this alert</h2></td>
-	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
-	        </tr>
-	        <tr>
-	            <td>Alert 4 <br> <h2>Information about this alert</h2></td>
-	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
-	        </tr>
-	        <tr>
-	            <td>Alert 5 <br> <h2>Information about this alert</h2></td>
-	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
-	        </tr>
-	        <tr>
-	            <td>Alert 6 <br> <h2>Information about this alert</h2></td>
-	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
-	        </tr>
-	        <tr>
-	            <td>Alert 7 <br> <h2>Information about this alert</h2></td>
-	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
-	        </tr>
-	        <tr>
-	            <td>Alert 8 <br> <h2>Information about this alert</h2></td>
-	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
-	        </tr>
-	        <tr>
-	            <td>Alert 9 <br> <h2>Information about this alert</h2></td>
-	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
-	        </tr>
-	        <tr>
-	            <td>Alert 10 <br> <h2>Information about this alert</h2></td>
-	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
-	        </tr>
-	        <tr>
-	            <td>Alert 11 <br> <h2>Information about this alert</h2></td>
-	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
-	        </tr>
-	        <tr>
-	            <td>Alert 12 <br> <h2>Information about this alert</h2></td>
-	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
-	        </tr>
-	        <tr>
-	            <td>Alert 13 <br> <h2>Information about this alert</h2></td>
-	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
-	        </tr>
-	        <tr>
-	            <td>Alert 14 <br> <h2>Information about this alert</h2></td>
-	            <td style="text-align: right; vertical-align: top;"> <input type="button" class="remove" value="&times"></td>
-	        </tr>
+	            <?php checkAlert(); ?>
 	        </table>
 	        
 	        
