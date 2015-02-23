@@ -23,13 +23,13 @@
 	
 	
 	<h3>Query Builder:</h3>
-		<select id="type" class='inputstyle' style='width:260px; margin-left:15px; margin-right:15px;'>
+     <form name="pInfo" method="post" enctype="multipart/form-data" action="submit.php">
+		<select id="type" name ="Select"class='inputstyle' style='width:260px; margin-left:15px; margin-right:15px;'>
 			<option value="" disabled selected>Select Trades or Communications</option>
 			<option value='Trades'>Trades</option>
 			<option value='Communications'>Communications</option>
 		</select>
-                       
-		
+      
 		<select class='inputstyle' style='width:260px; margin-left:15px; margin-right:15px;'>
 			<option value="" disabled selected>Select Date</option>
 			<option value='today'>
@@ -160,22 +160,7 @@
 		
 			
 			<input class='submitbutton' type='submit' value='Submit'>
-		
-		<script>
-		
-			$('.submitbutton').click(function(){
-        			var Type = $("#type option:selected").text();
-        			
-       			        var ajaxurl = 'submit.php';
-        			 var data =  {'type': Type};
-		        	$.post(ajaxurl, data, function (response) {
-           		 
-           		 	$('.query-form').html(response);
-           			 
-        			});
-    			});
-		
-		</script>
+            </form>
 	
 	</div>
 	<div class="query-builder-footer">
@@ -185,9 +170,7 @@
 		<table id="alerts" style="width:100%;">
 	            <?php checkAlert(); ?>
 	        </table>
-	        
-	        
-	        
+	       
 	        <script>
 			$('input[type="button"]').click(function(e){
 		   	$(this).closest('tr').remove()
@@ -197,13 +180,15 @@
 	
 
 	<div class="query-form">
-	
-	
-
-	
-
-
-
+		<?php 
+			 $type = $_GET['type'];
+			 if ($type == 1){
+			 	readTrades();
+				}
+			 else if ($type == 2){
+			 	readComms();
+				}
+		?>
 	</div>
 
 	
