@@ -17,8 +17,8 @@ public class TradesThread implements Runnable {
             //get current date time with Date()
             Date currentdate = new Date();
             String dateStr = dateFormat.format(currentdate);
-            boolean DoesExist = new File(dateStr + "tradesstore.csv").exists();
-            final PrintWriter outputTrades = new PrintWriter(new FileWriter(dateStr + "tradesstore.csv", true));
+            boolean DoesExist = new File("data/" + dateStr + "tradesstore.csv").exists();
+            final PrintWriter outputTrades = new PrintWriter(new FileWriter("data/" + dateStr + "tradesstore.csv", true));
             //Define a writer for outputting trades.
 
             String hostName = "cs261.dcs.warwick.ac.uk";
