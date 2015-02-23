@@ -54,7 +54,7 @@ echo $return;
 
 function checkAlert() {
 
-$dir = "images"; // directory 
+$dir = "alerts"; // directory 
 $alert = scandir($dir,1); // scan it
 $i = 1;
 foreach ($alert as $a){
