@@ -16,23 +16,20 @@ while (!feof($file_handle) ) { // While loop, to open all of the files
 
 $trades = fgetcsv($file_handle, 1024);  // Array of results
 
-
-
- $return .= "<tr> <td> ".$trades[0] . " </td>";
- $return .= "<td> ".$trades[1] ." </td>";
- $return .= "<td> ".$trades[2] ." </td>" ; // Printing the results
- $return .= "<td> ".$trades[3] ." </td>" ; // Printing the results		<br>
- $return .= "<td> ".$trades[4] ." </td>" ; // Printing the results		<br>
- $return .= "<td> ".$trades[5] ." </td>" ; // Printing the results		<br>
- $return .= "<td> ".$trades[6] ." </td>" ; // Printing the results		<br>
- $return .= "<td> ".$trades[7] ." </td>" ; // Printing the results		<br>
- $return .= "<td> ".$trades[8] ." </td>" ; // Printing the results		<br>
- $return .= "<td> ".$trades[9] ." </td>" ; // Printing the results		<br>
- $return .= "</tr>";
+ echo "<tr> <th> ".$trades[0] . " </th>";
+ echo "<th> ".$trades[1] ." </th>";
+ echo "<th> ".$trades[2] ." </th>" ; // Printing the results
+ echo "<th> ".$trades[3] ." </th>" ; // Printing the results		<br>
+ echo "<th> ".$trades[4] ." </th>" ; // Printing the results		<br>
+ echo "<th> ".$trades[5] ." </th>" ; // Printing the results		<br>
+ echo "<th> ".$trades[6] ." </th>" ; // Printing the results		<br>
+ echo "<th> ".$trades[7] ." </th>" ; // Printing the results		<br>
+ echo "<th> ".$trades[8] ." </th>" ; // Printing the results		<br>
+ echo "<th> ".$trades[9] ." </th>" ; // Printing the results		<br>
+ echo "</tr>";
 }	
-$return .= "</table>";
+echo "</table>";
 fclose($file_handle); // close
-echo $return;
 }
 
 function readComms() {
