@@ -1,16 +1,15 @@
 <?php
-
-if ($_POST['type'] == 'Trades'){
-	readTrades();
+if ($_POST['Select'] == 'Trades'){
+	header("Location: index.php?type=1");
 }
-else if ($_POST['type'] == 'Communications'){
-	readComms();
-}
+else if ($_POST['Select'] == 'Communications'){
 
+	header("Location: index.php?type=2");
+	}
 function readTrades() {
-$file_handle = fopen("data/trades.csv", "r");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file
-$return = "<table id = 'trades' style='width:100%;'>";	
+$file_handle = fopen("data/trades.csv", "r") or die ("Cant get file");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file.
 
+echo "<table id = 'trades' style='width:100%;'>";	
 
 while (!feof($file_handle) ) { // While loop, to open all of the files 	
 
@@ -33,22 +32,20 @@ fclose($file_handle); // close
 }
 
 function readComms() {
-$file_handle = fopen("Comms.csv", "r");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file
-$return = "<table id = 'comms' style='width:calc(100% - 320px);'>";	
-while (!feof($file_handle) ) { // While loop, to open all of the files 	
+$file_handle = fopen("data/comms.csv", "r") or die ("Cant get file");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file
 
+echo  "<table id = 'comms' style='width:calc(100% - 320px);'>";	
+while (!feof($file_handle) ) { // While loop, to open all of the files 	
 $comms = fgetcsv($file_handle, 1024);  // Array of results
 
- $return .= "<tr> <td> ".$comms[0] . " </td>";
- $return .= "<td> ".$comms[1] ." </td>";
- $return .= "<td> ".$comms[2] ." </td>" ; // Printing the results
- $return .= "</tr>";
+ echo "<tr> <th> ".$comms[0] . " </th>";
+ echo "<th> ".$comms[1] ." </th>";
+ echo "<th> ".$comms[2] ." </th>" ; // Printing the results
+ echo "</tr>";
 }	
-$return .= "</table>";
+echo "</table>";
 fclose($file_handle); // close
-echo $return;
 }
-
 function checkAlert() {
 
 $dir = "alerts"; // directory 
