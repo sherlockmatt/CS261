@@ -21,7 +21,7 @@ public class Main {
         DateFormat dateFormatForCheck = new SimpleDateFormat("yyyyMMdd");
         //get current date time with Date()
         Date currentdate = new Date();
-        Date cutoffdate = new Date(currentdate.getTime() - 15 * 24 * 3600 * 1000);
+        Date cutoffdate = new Date(currentdate.getTime() - 14 * 24 * 3600 * 1000);
         String dateStr = dateFormatForCheck.format(cutoffdate);
         System.out.println("Cut off date " + dateStr);
 
