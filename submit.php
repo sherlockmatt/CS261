@@ -8,7 +8,7 @@ else if ($_POST['type'] == 'Communications'){
 }
 
 function readTrades() {
-$file_handle = fopen("Trades.csv", "r");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file
+$file_handle = fopen("data/trades.csv", "r");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file
 $return = "<table id = 'trades' style='width:100%;'>";	
 
 
