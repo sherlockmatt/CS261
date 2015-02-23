@@ -1,5 +1,4 @@
 <?php
-
 if ($_POST['Select'] == 'Trades'){
 	header("Location: index.php?type=1");
 }
@@ -47,7 +46,6 @@ $comms = fgetcsv($file_handle, 1024);  // Array of results
 echo "</table>";
 fclose($file_handle); // close
 }
-
 function checkAlert() {
 
 $dir = "alerts"; // directory 

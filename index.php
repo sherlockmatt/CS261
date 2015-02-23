@@ -6,10 +6,6 @@
 		<link rel="stylesheet" href="se.css" type="text/css" />
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script type="text/javascript" charset="utf-8"></script>
-		
-	
-
-		
 	</head>
 	<body>
 	<?php include 'submit.php'; ?>
@@ -177,8 +173,6 @@
 			})
 		</script>
 	</div>
-	
-
 	<div class="query-form">
 		<?php 
 			 $type = $_GET['type'];
