@@ -17,8 +17,8 @@ public class CommsThread implements Runnable {
             //get current date time with Date()
             Date currentdate = new Date();
             String dateStr = dateFormat.format(currentdate);
-            boolean DoesExist = new File(dateStr + "commsstore.csv").exists();
-            final PrintWriter outputTrades = new PrintWriter(new FileWriter(dateStr + "commsstore.csv", true));
+            boolean DoesExist = new File("data/" + dateStr + "commsstore.csv").exists();
+            final PrintWriter outputTrades = new PrintWriter(new FileWriter("data/" + dateStr + "commsstore.csv", true));
             //Define a writer for outputting trades.
 
             String hostName = "cs261.dcs.warwick.ac.uk";
