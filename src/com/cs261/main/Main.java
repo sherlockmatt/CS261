@@ -38,21 +38,25 @@ public class Main {
             }
         });
 
-        for (File file : trades) {
-            String name = file.getName();
-            Date fileDate = new Date(Integer.parseInt(name.substring(0, 4)) + 12 * Integer.parseInt(name.substring(5, 6)) + 7 * Integer.parseInt(name.substring(7, 8)));
-            if (fileDate.before(cutoffdate)) {
-                if (!file.delete()) {
-                    throw new IOException("Could not delete file " + file.getName());
+        if (trades.length > 0) {
+            for (File file : trades) {
+                String name = file.getName();
+                Date fileDate = new Date(Integer.parseInt(name.substring(0, 4)) + 12 * Integer.parseInt(name.substring(5, 6)) + 7 * Integer.parseInt(name.substring(7, 8)));
+                if (fileDate.before(cutoffdate)) {
+                    if (!file.delete()) {
+                        throw new IOException("Could not delete file " + file.getName());
+                    }
                 }
             }
         }
-        for (File file : comms) {
-            String name = file.getName();
-            Date fileDate = new Date(Integer.parseInt(name.substring(0, 4)) + 12 * Integer.parseInt(name.substring(5, 6)) + 7 * Integer.parseInt(name.substring(7, 8)));
-            if (fileDate.before(cutoffdate)) {
-                if (!file.delete()) {
-                    throw new IOException("Could not delete file " + file.getName());
+        if (comms.length > 0) {
+            for (File file : comms) {
+                String name = file.getName();
+                Date fileDate = new Date(Integer.parseInt(name.substring(0, 4)) + 12 * Integer.parseInt(name.substring(5, 6)) + 7 * Integer.parseInt(name.substring(7, 8)));
+                if (fileDate.before(cutoffdate)) {
+                    if (!file.delete()) {
+                        throw new IOException("Could not delete file " + file.getName());
+                    }
                 }
             }
         }
