@@ -1,5 +1,7 @@
 package com.cs261.analysis;
 
+import com.cs261.main.Query;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -20,20 +22,14 @@ public class Analyser {
      * @param query The query to run
      * @return true if success, false if failure
      */
-    public boolean analyse(String query) {
-        //Set stuff based on query
+    public boolean analyse(Query query) {
+        if (query != null) {
+            //Set stuff based on query
 
-        //Add everything to the graph
+            //Add everything to the graph
 
-        return analyse();
-    }
+        }
 
-    /**
-     * This method simply runs analysis on the current graph
-     *
-     * @return true if success, false if failure
-     */
-    public boolean analyse() {
         //Perform DFS to find all connected components
         List<Node> nodes = this.graph.getAllNodes();
         while (nodes.size() > 0){
@@ -50,6 +46,13 @@ public class Analyser {
             //Do stuff with connectedComponent (i.e. output it)
             
         }
+
+        if (query != null) {
+            //output result
+        } else {
+            //output differently?
+        }
+
         //Figure out what to return
 
         return false;
