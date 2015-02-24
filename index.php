@@ -5,9 +5,6 @@
 	<title>Software Engineering Project</title>
 		<link rel="stylesheet" href="se.css" type="text/css" />
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<<<<<<< HEAD
-		<script type="text/javascript" charset="utf-8"></script>
-=======
 		<script type="text/javascript" charset="utf-8">
         function validateForm() {
 			var nAme = document.forms["pInfo"]["Select"].value;
@@ -19,8 +16,6 @@
 				}
 		}
 	</script>
-    
->>>>>>> origin/teo
 	</head>
 	<body>
 	<?php include 'submit.php'; ?>
@@ -33,13 +28,8 @@
   
 	<div class="query-builder" id="alert" >
 	<h3>Query Builder:</h3>
-<<<<<<< HEAD
-     <form name="pInfo" method="post" enctype="multipart/form-data" action="submit.php">
-		<select id="type" name ="Select"class='inputstyle' style='width:260px; margin-left:15px; margin-right:15px;'>
-=======
      <form name="pInfo" method="post" enctype="multipart/form-data" action="submit.php" onSubmit="return validateForm();">
 		<select id="type" name ="Select" class='inputstyle' style='width:260px; margin-left:15px; margin-right:15px;'>
->>>>>>> origin/teo
 			<option value="" disabled selected>Select Trades or Communications</option>
 			<option value='Trades'>Trades</option>
 			<option value='Communications'>Communications</option>
@@ -196,11 +186,7 @@
 		<?php 
 			 $type = $_GET['type'];
 			 if ($type == 1){
-<<<<<<< HEAD
-			 	readTrades();
-=======
 			 	readSpecifcTimeTrades($_GET['startTime'],$_GET['endTime']);
->>>>>>> origin/teo
 				}
 			 else if ($type == 2){
 			 	readComms();
