@@ -82,13 +82,35 @@ public class Main {
         synchronized (event) {
             while (true) {
                 try {
+                    event.wait(5 * 60 * 1000);
+                    Calendar cal = Calendar.getInstance();
+                    if (cal.get(Calendar.HOUR_OF_DAY) == 0 && cal.get(Calendar.MINUTE) > 30) {
+                        break;
+                    }
+                } catch (InterruptedException e) {
+                    return;
+                }
+            }
+            while (true) {
+                try {
                     event.wait(1 * 60 * 1000); //One minute timeout
-                    if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) == 0) {
-                        //System.out.println(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+                    Calendar cal = Calendar.getInstance();
+                    if (cal.get(Calendar.HOUR_OF_DAY) == 0 && cal.get(Calendar.MINUTE) < 30) {
+                        //Shut down at some point between 00:00 and 00:30
                         Tradethread.interrupt();
                         Tradethread.join();
                         Commsthread.interrupt();
                         Commsthread.join();
+                        //Start a new process
+                        ProcessBuilder pb = new ProcessBuilder("java", "Main");
+                        pb.directory(new File("/src/com/cs261/main/"));
+                        File log = new File("log");
+                        pb.redirectErrorStream(true);
+                        pb.redirectOutput(ProcessBuilder.Redirect.appendTo(log));
+                        Process p = pb.start();
+                        assert pb.redirectInput() == ProcessBuilder.Redirect.PIPE;
+                        assert pb.redirectOutput().file() == log;
+                        assert p.getInputStream().read() == -1;
                         //Analysisthread.interrupt();
                         throw new InterruptedException();
                     }
