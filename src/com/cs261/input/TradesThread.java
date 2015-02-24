@@ -28,23 +28,7 @@ public class TradesThread implements Runnable {
             final Socket echoSocket = new Socket(hostName, portNumber);
             // Establish a socket using the chosen host and port.
 
-            Runtime.getRuntime().addShutdownHook(new Thread() {
-                // Code run when program is stopped via Ctrl+c
-                public void run() {
-                    try {
-                        System.out.println("Ctrl-c caught");
-                        outputTrades.close(); // Close link to file output.
-                        echoSocket.close(); // Close link to socket.
-                    } catch (IOException IOEx) {
-                        IOEx.printStackTrace();
-                    }
-                }
-
-            });
-
             try {
-
-
                 BufferedReader tradesocket = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
                 // Begin reading from socket.
                 String lineinput; // String to hold each line read in.
@@ -63,7 +47,12 @@ public class TradesThread implements Runnable {
                             outputTrades.append(",");
                         }
                     }
+                    if (Thread.interrupted()) {
+                        throw new InterruptedException();
+                    }
                 }
+            } catch (InterruptedException e) {
+                System.out.println("Ctrl-c caught (trades)");
             } finally { // Runs after try whether success or fail.
                 outputTrades.close(); // Close link to file output.
                 echoSocket.close(); // Close link to socket.
