@@ -10,6 +10,7 @@ else if ($_POST['Select'] == 'Communications'){
 	header("Location: index.php?type=2");
 	}
 	
+	
 function readTrades() {
 $file_handle = fopen("data/trades.csv", "r") or die ("Cant get file");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file.
 

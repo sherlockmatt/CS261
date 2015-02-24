@@ -16,6 +16,7 @@
 				}
 		}
 	</script>
+    
 	</head>
 	<body>
 	<?php include 'submit.php'; ?>
