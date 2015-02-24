@@ -5,7 +5,17 @@
 	<title>Software Engineering Project</title>
 		<link rel="stylesheet" href="se.css" type="text/css" />
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-		<script type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+        function validateForm() {
+			var nAme = document.forms["pInfo"]["Select"].value;
+			var tIme = document.forms["pInfo"]["time"].value
+		
+			if (nAme == null || nAme == "" || tIme == null || tIme =="") {
+					alert("Fill up all the information needed");
+				 return false;
+				}
+		}
+	</script>
 	</head>
 	<body>
 	<?php include 'submit.php'; ?>
@@ -18,8 +28,8 @@
   
 	<div class="query-builder" id="alert" >
 	<h3>Query Builder:</h3>
-     <form name="pInfo" method="post" enctype="multipart/form-data" action="submit.php">
-		<select id="type" name ="Select"class='inputstyle' style='width:260px; margin-left:15px; margin-right:15px;'>
+     <form name="pInfo" method="post" enctype="multipart/form-data" action="submit.php" onSubmit="return validateForm();">
+		<select id="type" name ="Select" class='inputstyle' style='width:260px; margin-left:15px; margin-right:15px;'>
 			<option value="" disabled selected>Select Trades or Communications</option>
 			<option value='Trades'>Trades</option>
 			<option value='Communications'>Communications</option>
@@ -125,31 +135,31 @@
 				</script>
 			</option>
 		</select> 
-		<select class='inputstyle' style='width:260px; margin-left:15px; margin-right:15px;'>
+		<select class='inputstyle' name ='time' style='width:260px; margin-left:15px; margin-right:15px;'>
 			<option value="" disabled selected>Select Time</option>
-			<option value='trades'>01.00 - 02.00</option>
-			<option value='trades'>02.00 - 03.00</option>
-			<option value='trades'>03.00 - 04.00</option>
-			<option value='trades'>04.00 - 05.00</option>
-			<option value='trades'>05.00 - 06.00</option>
-			<option value='trades'>06.00 - 07.00</option>
-			<option value='trades'>07.00 - 08.00</option>
-			<option value='trades'>08.00 - 09.00</option>
-			<option value='trades'>09.00 - 10.00</option>
-			<option value='trades'>10.00 - 11.00</option>
-			<option value='trades'>11.00 - 12.00</option>
-			<option value='trades'>12.00 - 13.00</option>
-			<option value='trades'>13.00 - 14.00</option>
-			<option value='trades'>14.00 - 15.00</option>
-			<option value='trades'>15.00 - 16.00</option>
-			<option value='trades'>16.00 - 17.00</option>
-			<option value='trades'>17.00 - 18.00</option>
-			<option value='trades'>18.00 - 19.00</option>
-			<option value='trades'>19.00 - 20.00</option>
-			<option value='trades'>20.00 - 21.00</option>
-			<option value='trades'>21.00 - 22.00</option>
-			<option value='trades'>22.00 - 23.00</option>
-			<option value='trades'>23.00 - 24.00</option>
+			<option value='01:00:00-02:00:00'>01.00 - 02.00</option> 
+			<option value='02:00:00-03:00:00'>02.00 - 03.00</option> 
+			<option value='03:00:00-04:00:00'>03.00 - 04.00</option>
+			<option value='04:00:00-05:00:00'>04.00 - 05.00</option>
+			<option value='05:00:00-06:00:00'>05.00 - 06.00</option>	
+			<option value='06:00:00-07:00:00'>06.00 - 07.00</option>
+			<option value='07:00:00-08:00:00'>07.00 - 08.00</option>
+			<option value='08:00:00-09:00:00'>08.00 - 09.00</option>
+			<option value='09:00:00-10:00:00'>09.00 - 10.00</option>
+			<option value='10:00:00-11:00:00'>10.00 - 11.00</option>
+			<option value='11:00:00-12:00:00'>11.00 - 12.00</option>
+			<option value='12:00:00-13:00:00'>12.00 - 13.00</option>
+			<option value='13:00:00-14:00:00'>13.00 - 14.00</option>
+			<option value='14:00:00-15:00:00'>14.00 - 15.00</option>
+			<option value='15:00:00-16:00:00'>15.00 - 16.00</option>
+			<option value='16:00:00-17:00:00'>16.00 - 17.00</option>
+			<option value='17:00:00-18:00:00'>17.00 - 18.00</option>
+			<option value='18:00:00-19:00:00'>18.00 - 19.00</option>
+			<option value='19:00:00-20:00:00'>19.00 - 20.00</option>
+			<option value='20:00:00-21:00:00'>20.00 - 21.00</option>
+			<option value='21:00:00-22:00:00'>21.00 - 22.00</option>
+			<option value='22:00:00-23:00:00'>22.00 - 23.00</option>
+			<option value='23:00:00-24:00:00'>23.00 - 24.00</option>
 			
 		</select>
 		
@@ -176,16 +186,12 @@
 		<?php 
 			 $type = $_GET['type'];
 			 if ($type == 1){
-			 	readTrades();
+			 	readSpecifcTimeTrades($_GET['startTime'],$_GET['endTime']);
 				}
 			 else if ($type == 2){
 			 	readComms();
 				}
 		?>
 	</div>
-
-	
-	
-	
 	</body>
 	</html>
