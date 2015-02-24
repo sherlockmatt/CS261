@@ -37,7 +37,7 @@ fclose($file_handle); // close
 
 function readSpecifcTimeTrades(&$startTime,&$endTime){
 
-$file_handle = fopen("Trades.csv", "r") or die ("Cant get file");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file.
+$file_handle = fopen("data/trades.csv", "r") or die ("Cant get file");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file.
 
 echo "<table id = 'trades' style='width:100%;'>";	
 
