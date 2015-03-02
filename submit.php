@@ -83,7 +83,7 @@ $alert = scandir($dir,1); // scan it
 $i = 1;
 foreach ($alert as $a){
 	if ($a != '..' && $a != '.'){
-	echo "<tr><td> Alert ".$i." <br> <h2>".$a. "</h2></td>";
+	echo "<tr><td> <a href = index.php?type=3&name=".$a.">Alert ".$i." </a><br> <h2>".$a. "</h2></td>";
 	echo "<td style = 'text-align: right; vertical-align: top;'> <input type='button' class='remove' value='&times'> </td>";
 	echo "</tr>";
 	$i++;

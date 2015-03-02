@@ -191,6 +191,9 @@
 			 else if ($type == 2){
 			 	readComms();
 				}
+			 else if ($type == 3){
+			 	print $_GET['name'];
+			 }
 		?>
 	</div>
 	</body>
