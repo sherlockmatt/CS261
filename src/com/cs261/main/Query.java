@@ -5,15 +5,11 @@ import java.util.Date;
 public class Query {
 
     private String uuid;
-    private String x;
-    private String y;
     private Date date;
     private int time;
 
-    public Query(String uuid, String x, String y, Date date, int time) {
+    public Query(String uuid, Date date, int time) {
         this.uuid = uuid;
-        this.x = x;
-        this.y = y;
         this.setDate(date);
         this.setTime(time);
     }
@@ -22,22 +18,6 @@ public class Query {
         return this.uuid;
     }
     //N.B. There is no setUUID() method, as this mustn't change
-
-    public String getX() {
-        return x;
-    }
-
-    public void setX(String x) {
-        this.x = x;
-    }
-
-    public String getY() {
-        return y;
-    }
-
-    public void setY(String y) {
-        this.y = y;
-    }
 
     public Date getDate() {
         return date;

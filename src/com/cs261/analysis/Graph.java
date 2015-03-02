@@ -12,8 +12,8 @@ public class Graph {
         nodes = new ArrayList<Node>();
     }
 
-    public void addNode(String name, String content, int x, int y, int radius) {
-        Node n1 = new Node(cntr++, name, content, x, y);
+    public void addNode(String[] content, int x, int y, int radius) {
+        Node n1 = new Node(cntr++, content, x, y);
         nodes.add(n1);
         for (Node n2 : getNodesInRadius(n1, radius)) {
             n1.addEdge(n2);

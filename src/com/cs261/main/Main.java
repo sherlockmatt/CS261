@@ -1,5 +1,6 @@
 package com.cs261.main;
 
+import com.cs261.input.AnalysisThread;
 import com.cs261.input.CommsThread;
 import com.cs261.input.TradesThread;
 
@@ -72,15 +73,15 @@ public class Main {
 
         Thread Tradethread = new Thread(new TradesThread()); // Creates new thread.
         Thread Commsthread = new Thread(new CommsThread()); // Creates new thread.
-        //Thread Analysisthread = new Thread(new AnalysisThread());
+        Thread Analysisthread = new Thread(new AnalysisThread()); //Creates new thread.
         System.out.println("Should start the thread");
         Tradethread.start(); // Runs new thread.
         Commsthread.start(); // Runs new thread.
-        //Analysisthread.start();
+        Analysisthread.start(); //Runs new thread.
         System.out.println("Should occur before thread finishes thread");
 
         synchronized (event) {
-            while (true) {
+            while (true) { //This loop waits until after 00:30, so that it doesn't start-stop-start-stop etc
                 try {
                     event.wait(5 * 60 * 1000);
                     Calendar cal = Calendar.getInstance();
@@ -101,6 +102,8 @@ public class Main {
                         Tradethread.join();
                         Commsthread.interrupt();
                         Commsthread.join();
+                        Analysisthread.interrupt();
+                        Analysisthread.join();
                         //Start a new process
                         ProcessBuilder pb = new ProcessBuilder("java", "Main");
                         pb.directory(new File("/src/com/cs261/main/"));

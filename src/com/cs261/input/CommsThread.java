@@ -45,9 +45,9 @@ public class CommsThread implements Runnable {
                         } else {
                             outputTrades.append(",");
                         }
-                        if (Thread.interrupted()) {
-                            throw new InterruptedException();
-                        }
+                    }
+                    if (Thread.interrupted()) {
+                        throw new InterruptedException();
                     }
                 }
             } catch (InterruptedException e) {

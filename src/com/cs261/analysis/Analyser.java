@@ -1,6 +1,8 @@
 package com.cs261.analysis;
 
 import com.cs261.main.Query;
+import com.cs261.output.AlertPrinter;
+import com.cs261.output.QueryPrinter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +18,7 @@ public class Analyser {
         this.radius = radius;
     }
 
-    /**
-     * The method which runs analysis, using the supplied query
-     *
-     * @param query The query to run
-     * @return true if success, false if failure
-     */
-    public boolean analyse(Query query) {
+    public void analyse(Query query) {
         if (query != null) {
             //Set stuff based on query
 
@@ -32,7 +28,8 @@ public class Analyser {
 
         //Perform DFS to find all connected components
         List<Node> nodes = this.graph.getAllNodes();
-        while (nodes.size() > 0){
+        List<Node> output = new ArrayList<Node>();
+        while (nodes.size() > 0) {
             List<Node> connectedComponent = new ArrayList<Node>();
             Stack<Node> stack = new Stack<Node>();
             stack.push(nodes.get(0)); //Add a new start node
@@ -43,27 +40,26 @@ public class Analyser {
                     stack.push(n2);
                 }
             }
-            //Do stuff with connectedComponent (i.e. output it)
-            
+            if (connectedComponent.size() > 3 && connectedComponent.size() < 1000) {//Sensitivity values, will likely need tweaking        <════════        <═════════
+                output.addAll(connectedComponent);
+            }
         }
 
         if (query != null) {
-            //output result
+            QueryPrinter printer = new QueryPrinter(query, output);
+            printer.print();
         } else {
-            //output differently?
+            AlertPrinter printer = new AlertPrinter(output);
+            printer.print();
         }
-
-        //Figure out what to return
-
-        return false;
     }
 
-    public void addNode(String name, String content, int x, int y) {
-        this.graph.addNode(name, content, x, y, this.radius); //sdfsf
+    public void addNode(String[] content, int x, int y) {
+        this.graph.addNode(content, x, y, this.radius);
     }
 
-    public void addNode(String name, String content, int x, int y, int radius) {
-        this.graph.addNode(name, content, x, y, radius);
+    public void addNode(String[] content, int x, int y, int radius) {
+        this.graph.addNode(content, x, y, radius);
     }
 
     public List<Node> getNodesInRadius(Node node, int radius) {
