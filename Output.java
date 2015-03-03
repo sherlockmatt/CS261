@@ -52,6 +52,12 @@ public class Output {
     public static void outputUsingPHP(){// example to show how we could run the anlysis from the php
     	// the java can print out directly to the webpage from here on using system.out.print
     	// this means we can use it similar to how u would with using echo within php
+    	/* This is the php we'd need to run to call the script 
+    		<?php 
+			exec('java Output some_value',$output);
+			echo $output[0];
+		?>
+	*/
     	
     	/* do all our anlysis and get the fields we are now interested in*/
     	
