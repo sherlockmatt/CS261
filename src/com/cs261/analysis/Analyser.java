@@ -18,17 +18,15 @@ public class Analyser {
         this.radius = radius;
     }
 
-    public void analyse(Query query) {
-        if (query != null) {
-            //Set stuff based on query
+    public List<Node> analyse(Query query) {
+        //Set stuff based on query
 
-            //Add everything to the graph
-
-        }
+        //Add everything to the graph
 
         //Perform DFS to find all connected components
         List<Node> nodes = this.graph.getAllNodes();
         List<Node> output = new ArrayList<Node>();
+
         while (nodes.size() > 0) {
             List<Node> connectedComponent = new ArrayList<Node>();
             Stack<Node> stack = new Stack<Node>();
@@ -45,13 +43,32 @@ public class Analyser {
             }
         }
 
-        if (query != null) {
-            QueryPrinter printer = new QueryPrinter(query, output);
-            printer.print();
-        } else {
-            AlertPrinter printer = new AlertPrinter(output);
-            printer.print();
+        return output;
+    }
+
+    public void analyse() {
+        //Perform DFS to find all connected components
+        List<Node> nodes = this.graph.getAllNodes();
+        List<Node> output = new ArrayList<Node>();
+
+        while (nodes.size() > 0) {
+            List<Node> connectedComponent = new ArrayList<Node>();
+            Stack<Node> stack = new Stack<Node>();
+            stack.push(nodes.get(0)); //Add a new start node
+            while (!stack.empty()) {
+                Node n1 = stack.pop();
+                connectedComponent.add(n1);
+                for (Node n2 : n1.getConnected()) {
+                    stack.push(n2);
+                }
+            }
+            if (connectedComponent.size() > 3 && connectedComponent.size() < 1000) {//Sensitivity values, will likely need tweaking        <════════        <═════════
+                output.addAll(connectedComponent);
+            }
         }
+
+        AlertPrinter printer = new AlertPrinter(output);
+        printer.print();
     }
 
     public void addNode(String[] content, int x, int y) {

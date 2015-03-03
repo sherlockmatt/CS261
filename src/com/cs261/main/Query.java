@@ -4,20 +4,13 @@ import java.util.Date;
 
 public class Query {
 
-    private String uuid;
     private Date date;
     private int time;
 
-    public Query(String uuid, Date date, int time) {
-        this.uuid = uuid;
+    public Query(Date date, int time) {
         this.setDate(date);
         this.setTime(time);
     }
-
-    public String getUUID() {
-        return this.uuid;
-    }
-    //N.B. There is no setUUID() method, as this mustn't change
 
     public Date getDate() {
         return date;
