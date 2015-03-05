@@ -1,43 +1,24 @@
 <?php
-if ($_POST['Select'] == 'Trades' && $_POST['time'] != ""){
+if ($_POST['Select'] == 'Trades' && $_POST['time'] != "" && $POST['dAte'] != ""){
 
 	$startTime = substr($_POST['time'], 0,8);
 	$endTime =  substr($_POST['time'], 9);
-	header("Location: index.php?type=1&startTime=".$startTime."&endTime=".$endTime."");
+	$dAte = $_POST['dAte'];
+	header("Location: index.php?type=1&startTime=".$startTime."&endTime=".$endTime."&dAte=".$dAte."");
 }
 else if ($_POST['Select'] == 'Communications'){
-
-	header("Location: index.php?type=2");
-	}
 	
-function readTrades() {
-$file_handle = fopen("data/trades.csv", "r") or die ("Cant get file");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file.
-
-echo "<table id = 'trades' style='width:100%;'>";	
-
-while (!feof($file_handle) ) { // While loop, to open all of the files 	
-
-$trades = fgetcsv($file_handle, 1024);  // Array of results
-
- echo "<tr> <th> ".$trades[0] . " </th>";
- echo "<th> ".$trades[1] ." </th>";
- echo "<th> ".$trades[2] ." </th>" ; // Printing the results
- echo "<th> ".$trades[3] ." </th>" ; // Printing the results		<br>
- echo "<th> ".$trades[4] ." </th>" ; // Printing the results		<br>
- echo "<th> ".$trades[5] ." </th>" ; // Printing the results		<br>
- echo "<th> ".$trades[6] ." </th>" ; // Printing the results		<br>
- echo "<th> ".$trades[7] ." </th>" ; // Printing the results		<br>
- echo "<th> ".$trades[8] ." </th>" ; // Printing the results		<br>
- echo "<th> ".$trades[9] ." </th>" ; // Printing the results		<br>
- echo "</tr>";
-}	
-echo "</table>";
-fclose($file_handle); // close
+	$startTime = substr($_POST['time'], 0,8);
+	$endTime =  substr($_POST['time'], 9);
+	$dAte = $_POST['dAte'];
+	header("Location: index.php?type=2&startTime=".$startTime."&endTime=".$endTime."&dAte=".$dAte."");
+	
 }
 
-function readSpecifcTimeTrades(&$startTime,&$endTime){
+function readSpecifcTimeTrades(&$startDate,&$startTime,&$endTime){
 
-$file_handle = fopen("data/trades.csv", "r") or die ("Cant get file");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file.
+echo "data/".$startDate."trades.csv", "r";
+$file_handle = fopen("data/".$startDate."trades.csv", "r") or die ("Cant get file");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file.
 
 echo "<table id = 'trades' style='width:100%;'>";	
 
@@ -61,18 +42,21 @@ if (substr($trades[0],11,19) >= $startTime && substr($trades[0],11,19) <= $endTi
 echo "</table>";
 fclose($file_handle); // close
 }
-function readComms() {
-$file_handle = fopen("data/comms.csv", "r") or die ("Cant get file");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file
 
-echo  "<table id = 'comms' style='width:calc(100% - 320px);'>";	
+function readSpecficComms(&$startDate,&$startTime,&$endTime) {
+$file_handle = fopen("data/".$startDate."comms.csv", "r") or die ("Cant get file");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file
+
+echo "<table id = 'comms' style='width:100%;'>";
 while (!feof($file_handle) ) { // While loop, to open all of the files 	
 $comms = fgetcsv($file_handle, 1024);  // Array of results
+if (substr($comms[0],11,19) >= $startTime && substr($comms[0],11,19) <= $endTime)
+{
 
  echo "<tr> <th> ".$comms[0] . " </th>";
  echo "<th> ".$comms[1] ." </th>";
  echo "<th> ".$comms[2] ." </th>" ; // Printing the results
  echo "</tr>";
-}	
+} }
 echo "</table>";
 fclose($file_handle); // close
 }
