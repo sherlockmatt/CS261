@@ -9,9 +9,10 @@
         function validateForm() {
 			var nAme = document.forms["pInfo"]["Select"].value;
 			var tIme = document.forms["pInfo"]["time"].value
+			var dAte = document.forms["pInfo"]["dAte"].value
 		
-			if (nAme == null || nAme == "" || tIme == null || tIme =="") {
-					alert("Fill up all the information needed");
+			if (nAme == null || nAme == "" || tIme == null || tIme =="" || dAte == "null" || dAte == "" ) {
+					alert("Please Select trades or communication, Date and Time. Thank You");
 				 return false;
 				}
 		}
@@ -35,99 +36,99 @@
 			<option value='Communications'>Communications</option>
 		</select>
       
-		<select class='inputstyle' style='width:260px; margin-left:15px; margin-right:15px;'>
+		<select class='inputstyle' name='dAte' style='width:260px; margin-left:15px; margin-right:15px;'>
 			<option value="" disabled selected>Select Date</option>
-			<option value='today'>
+				<?php  echo "<option value=".date("Ymd").">"; ?> 
 			 	<script type="text/javascript">
 				var today = new Date();
 				document.write(today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear());
 				</script>
 			</option>
-			<option value='yesterday'>
+		<?php  echo "<option value=".date("Ymd", strtotime('-1 day')).">"; ?>
 			 	<script type="text/javascript">
 				var one = new Date();
 				one.setDate(today.getDate()-1);
 				document.write(one.getDate() + "/" + (one.getMonth()+1) + "/" + one.getFullYear());
 				</script>
 			</option>
-			<option value='2daysago'>
+		<?php  echo "<option value=".date("Ymd", strtotime('-2 day')).">"; ?>
 			 	<script type="text/javascript">
 				var two = new Date();
 				two.setDate(today.getDate()-2);
 				document.write(two.getDate() + "/" + (two.getMonth()+1) + "/" + two.getFullYear());
 				</script>
 			</option>
-			<option value='3daysago'>
+		<?php  echo "<option value=".date("Ymd", strtotime('-3 day')).">"; ?>
 			 	<script type="text/javascript">
 				var three = new Date();
 				three.setDate(today.getDate()-3);
 				document.write(three.getDate() + "/" + (three.getMonth()+1) + "/" + three.getFullYear());
 				</script>
 			</option>
-			<option value='4daysago'>
+		<?php  echo "<option value=".date("Ymd", strtotime('-4 day')).">"; ?>
 			 	<script type="text/javascript">
 				var four = new Date();
 				four.setDate(today.getDate()-4);
 				document.write(four.getDate() + "/" + (four.getMonth()+1) + "/" + four.getFullYear());
 				</script>
 			</option>
-			<option value='5daysago'>
+		<?php  echo "<option value=".date("Ymd", strtotime('-5 day')).">"; ?>
 			 	<script type="text/javascript">
 				var five = new Date();
 				five.setDate(today.getDate()-5);
 				document.write(five.getDate() + "/" + (five.getMonth()+1) + "/" + five.getFullYear());
 				</script>
 			</option>
-			<option value='6daysago'>
+		<?php  echo "<option value=".date("Ymd", strtotime('-6 day')).">"; ?>
 			 	<script type="text/javascript">
 				var six = new Date();
 				six.setDate(today.getDate()-6);
 				document.write(six.getDate() + "/" + (six.getMonth()+1) + "/" + six.getFullYear());
 				</script>
 			</option>
-			<option value='7daysago'>
+		<?php  echo "<option value=".date("Ymd", strtotime('-7 day')).">"; ?>
 			 	<script type="text/javascript">
 				var seven = new Date();
 				seven.setDate(today.getDate()-7);
 				document.write(seven.getDate() + "/" + (seven.getMonth()+1) + "/" + seven.getFullYear());
 				</script>
 			</option>
-			<option value='8daysago'>
+		<?php  echo "<option value=".date("Ymd", strtotime('-8 day')).">"; ?>
 			 	<script type="text/javascript">
 				var eight = new Date();
 				eight.setDate(today.getDate()-8);
 				document.write(eight.getDate() + "/" + (eight.getMonth()+1) + "/" + eight.getFullYear());
 				</script>
 			</option>
-			<option value='9daysago'>
+		<?php  echo "<option value=".date("Ymd", strtotime('-9 day')).">"; ?>
 			 	<script type="text/javascript">
 				var nine = new Date();
 				nine.setDate(today.getDate()-9);
 				document.write(nine.getDate() + "/" + (nine.getMonth()+1) + "/" + nine.getFullYear());
 				</script>
 			</option>
-			<option value='10daysago'>
+		<?php  echo "<option value=".date("Ymd", strtotime('-10 day')).">"; ?>
 			 	<script type="text/javascript">
 				var ten= new Date();
 				ten.setDate(today.getDate()-10);
 				document.write(ten.getDate() + "/" + (ten.getMonth()+1) + "/" + ten.getFullYear());
 				</script>
 			</option>
-			<option value='11daysago'>
+		<?php  echo "<option value=".date("Ymd", strtotime('-11 day')).">"; ?>
 			 	<script type="text/javascript">
 				var eleven = new Date();
 				eleven.setDate(today.getDate()-11);
 				document.write(eleven.getDate() + "/" + (eleven.getMonth()+1) + "/" + eleven.getFullYear());
 				</script>
 			</option>
-			<option value='12daysago'>
+		<?php  echo "<option value=".date("Ymd", strtotime('-12 day')).">"; ?>
 			 	<script type="text/javascript">
 				var twelve = new Date();
 				twelve.setDate(today.getDate()-12);
 				document.write(twelve.getDate() + "/" + (twelve.getMonth()+1) + "/" + twelve.getFullYear());
 				</script>
 			</option>
-			<option value='13daysago'>
+		<?php  echo "<option value=".date("Ymd", strtotime('-13 day')).">"; ?>
 			 	<script type="text/javascript">
 				var thirteen= new Date();
 				thirteen.setDate(today.getDate()-13);
@@ -186,10 +187,10 @@
 		<?php 
 			 $type = $_GET['type'];
 			 if ($type == 1){
-			 	readSpecifcTimeTrades($_GET['startTime'],$_GET['endTime']);
+			 	readSpecifcTimeTrades($_GET['dAte'],$_GET['startTime'],$_GET['endTime']);
 				}
 			 else if ($type == 2){
-			 	readComms();
+			 	readSpecficComms($_GET['dAte'],$_GET['startTime'],$_GET['endTime']);
 				}
 			 else if ($type == 3){
 			 	print $_GET['name'];
