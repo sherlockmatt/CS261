@@ -15,7 +15,7 @@ else if ($_POST['Select'] == 'Communications'){
 	
 }
 
-function readSpecifcTimeTrades(&startDate,&$startTime,&$endTime){
+function readSpecifcTimeTrades(&$startDate,&$startTime,&$endTime){
 
 echo "data/".$startDate."trades.csv", "r";
 $file_handle = fopen("data/".$startDate."trades.csv", "r") or die ("Cant get file");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file.
@@ -43,7 +43,7 @@ echo "</table>";
 fclose($file_handle); // close
 }
 
-function readSpecficComms(&startDate,&$startTime,&$endTime) {
+function readSpecficComms(&$startDate,&$startTime,&$endTime) {
 $file_handle = fopen("data/".$startDate."comms.csv", "r") or die ("Cant get file");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file
 
 echo "<table id = 'comms' style='width:100%;'>";
