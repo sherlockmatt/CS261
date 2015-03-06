@@ -1,5 +1,5 @@
 <?php
-if ($_POST['Select'] == 'Trades' && $_POST['time'] != "" && $POST['dAte'] != ""){
+if ($_POST['Select'] == 'Trades'){
 
 	$startTime = substr($_POST['time'], 0,8);
 	$endTime =  substr($_POST['time'], 9);
