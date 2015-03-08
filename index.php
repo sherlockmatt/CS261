@@ -28,8 +28,17 @@
 	</div>
   
 	<div class="query-builder" id="alert" >
+		<div class="query-builder-help" id="alert" >
+			<input type="button" class="remove" value="?" id='help'>
+			<script type="text/javascript"> 
+				$("#help").click(function() {
+		    		$("#helpOverlay").toggle();
+		    		$("#helpBox").toggle();
+				});
+			</script>
+		</div>
 	<h3>Query Builder:</h3>
-     <form name="pInfo" method="post" enctype="multipart/form-data" action="submit.php" onSubmit="return validateForm();">
+     	<form name="pInfo" method="post" enctype="multipart/form-data" action="submit.php" onSubmit="return validateForm();">
 		<select id="type" name ="Select" class='inputstyle' style='width:260px; margin-left:15px; margin-right:15px;'>
 			<option value="" disabled selected>Select Trades or Communications</option>
 			<option value='Trades'>Trades</option>
@@ -197,5 +206,22 @@
 			 }
 		?>
 	</div>
+	<div id='helpOverlay'>
+		<script type="text/javascript"> 
+			$("#helpOverlay").click(function() {
+				$("#helpOverlay").toggle();
+				$("#helpBox").toggle();	
+	
+			});
+		</script>
+	</div>
+	<div id='helpBox'>
+	<h4>Help: Query Builder</h4>
+	The Query Builder allows you to view any data from trades or communications from the past two weeks. Using the drop down boxes below: <br>
+	1. Select whether you would like to view trade data or communications. <br>
+	2. Select the date <br>
+	3. Select a time slot <br> 
+	</div>
+	
 	</body>
 	</html>
