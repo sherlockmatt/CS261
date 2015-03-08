@@ -2,15 +2,21 @@
 if ($_POST['Select'] == 'Trades'){
 	$startTime = substr($_POST['time'], 0,2);
 	$endTime =  substr($_POST['time'], 9,-6);
-	$dAte = $_POST['date'];
-	exec('java -jar FileName.jar '.$dAte.' '. $startTime.' '.$endTime.'', $output);
+	$year = substr($_POST['date'], 0 ,4);
+	$month = substr($_POST['date'], 4 ,-2);
+	$day = substr($_POST['date'], 6);
+	$query = $year." ".$month." ".$day." ".$startTime;
+	exec('java -cp DBA.jar com.cs261.output.QueryPrinter Trades '.$query.'', $output);
 	print_r($output); // print array
 }
 else if ($_POST['Select'] == 'Communications'){
 	$startTime = substr($_POST['time'], 0,2);
 	$endTime =  substr($_POST['time'], 9,-6);
-	$dAte = $_POST['date'];
-	exec('java -jar FileName.jar '.$dAte.' '. $startTime.' '.$endTime.'', $output);
+	$year = substr($_POST['date'], 0 ,4);
+	$month = substr($_POST['date'], 4 ,-2);
+	$day = substr($_POST['date'], 6);
+	$query = $year." ".$month." ".$day." ".$startTime;
+	exec('java -cp DBA.jar com.cs261.output.QueryPrinter Comms '.$query.'', $output);
 	print_r($output); // print array
 }
 
