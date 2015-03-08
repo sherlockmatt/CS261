@@ -1,24 +1,49 @@
-<?php
+<?php 
 if ($_POST['Select'] == 'Trades'){
 
 	$startTime = substr($_POST['time'], 0,8);
 	$endTime =  substr($_POST['time'], 9);
-	$dAte = $_POST['dAte'];
-	header("Location: index.php?type=1&startTime=".$startTime."&endTime=".$endTime."&dAte=".$dAte."");
+	$dAte = $_POST['date'];
+	exec('java -jar FileName.jar '.$dAte.' '. $startTime.' '.$endTime.'', $output);
+	print_r($output); // print array
 }
 else if ($_POST['Select'] == 'Communications'){
 	
 	$startTime = substr($_POST['time'], 0,8);
 	$endTime =  substr($_POST['time'], 9);
-	$dAte = $_POST['dAte'];
-	header("Location: index.php?type=2&startTime=".$startTime."&endTime=".$endTime."&dAte=".$dAte."");
+	$dAte = $_POST['date'];
+	exec('java -jar FileName.jar '.$dAte.' '. $startTime.' '.$endTime.'', $output);
+	print_r($output); // print array
+}
+
+else if ($_POST['Select'] == 'alerts')
+
+{
+	$fileName = $_POST['name'];
+	try {
+		readSpecifcTimeTrades($fileName);
+	} catch(Exception $e) {
+	
+       echo $e->getMessage(), "\n";
+	}
 	
 }
 
-function readSpecifcTimeTrades(&$startDate,&$startTime,&$endTime){
+else if ($_POST['Select'] == "remove"){
 
-echo "data/".$startDate."trades.csv", "r";
-$file_handle = fopen("data/".$startDate."trades.csv", "r") or die ("Cant get file");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file.
+	$removeAlert = $_POST['alerts'];
+	rename("alerts/".$removeAlert."", "Remove/".$removeAlert."") or die ("Failed to move file.");
+}
+
+function readSpecifcTimeTrades(&$fileName){
+
+if (!fopen("data/".$fileName."comms.csv", "r"))
+{	
+	throw new Exception('File had been deleted by other users. Please check the archieve folder');	
+}	
+else
+{
+$file_handle = fopen("data/".$fileName."trades.csv", "r") or die ("Cant get file");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file.
 
 echo "<table id = 'trades' style='width:100%;'>";	
 
@@ -40,10 +65,17 @@ if (substr($trades[0],11,19) >= $startTime && substr($trades[0],11,19) <= $endTi
  echo "</tr>";
 }	}
 echo "</table>";
+
 fclose($file_handle); // close
-}
+}}
 
 function readSpecficComms(&$startDate,&$startTime,&$endTime) {
+
+if (!fopen("data/".$startDate."comms.csv", "r"))
+{	
+	throw new Exception('File had been deleted by other users. Please check the archive folder');	
+}	
+
 $file_handle = fopen("data/".$startDate."comms.csv", "r") or die ("Cant get file");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file
 
 echo "<table id = 'comms' style='width:100%;'>";
@@ -60,6 +92,7 @@ if (substr($comms[0],11,19) >= $startTime && substr($comms[0],11,19) <= $endTime
 echo "</table>";
 fclose($file_handle); // close
 }
+
 function checkAlert() {
 
 $dir = "alerts"; // directory 
@@ -67,8 +100,9 @@ $alert = scandir($dir,1); // scan it
 $i = 1;
 foreach ($alert as $a){
 	if ($a != '..' && $a != '.'){
-	echo "<tr><td> <a href = index.php?type=3&name=".$a.">Alert ".$i." </a><br> <h2>".$a. "</h2></td>";
-	echo "<td style = 'text-align: right; vertical-align: top;'> <input type='button' class='remove' value='&times'> </td>";
+	echo "<tr><td>";
+	echo "<a class=alerts href= 'javascript:;' onClick='like(this);' rel = ".$a.">Alert ".$i." </a><br> <h2>".$a. "</h2></td>";
+	echo "<td style = 'text-align: right; vertical-align: top;'> <button type='button' id ='buttonID' name= 'buttonID' class='remove' value=".$a.">&times;</button></td>";
 	echo "</tr>";
 	$i++;
 	}

@@ -4,20 +4,35 @@
 	
 	<title>Software Engineering Project</title>
 		<link rel="stylesheet" href="se.css" type="text/css" />
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-		<script type="text/javascript" charset="utf-8">
-        function validateForm() {
-			var nAme = document.forms["pInfo"]["Select"].value;
-			var tIme = document.forms["pInfo"]["time"].value
-			var dAte = document.forms["pInfo"]["dAte"].value
-		
-			if (nAme == null || nAme == "" || tIme == null || tIme =="" || dAte == "null" || dAte == "" ) {
-					alert("Please Select trades or communication, Date and Time. Thank You");
+     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script>
+			function SubmitForm() {
+			var Select = document.forms["pInfo"]["Select"].value;
+			var time = document.forms["pInfo"]["time"].value;
+			var date = document.forms["pInfo"]["dAte"].value;
+			
+			if (Select == null || Select == "" || time == null || time =="" || date == "null" || date == "" ) {
+				 alert("Please Select trades or communication, Date and Time. Thank You");
 				 return false;
 				}
+				else {
+			   $.post("submit.php", { Select: Select, time: time, date: date },
+			   function(data) {
+					$(".query-form").html(data);
+			   });
+			}}
+</script>
+<script>
+			function like(placeholder) {
+     		var name =  $(placeholder).attr('rel');
+         	var Select = "alerts";
+           	$.post("submit.php", { name: name, Select: Select },
+			function(data) {
+					$(".query-form").html(data);
+			 });
 		}
-	</script>
-	</head>
+</script>
+ 	</head>
 	<body>
 	<?php include 'submit.php'; ?>
 	<div class="header">
@@ -26,10 +41,9 @@
 			Deutsche Bank Trade Analysis
 		</div>
 	</div>
-  
 	<div class="query-builder" id="alert" >
 	<h3>Query Builder:</h3>
-     <form name="pInfo" method="post" enctype="multipart/form-data" action="submit.php" onSubmit="return validateForm();">
+     <form name="pInfo" method="post" enctype="multipart/form-data" action="submit.php" id="pInfo">
 		<select id="type" name ="Select" class='inputstyle' style='width:260px; margin-left:15px; margin-right:15px;'>
 			<option value="" disabled selected>Select Trades or Communications</option>
 			<option value='Trades'>Trades</option>
@@ -163,11 +177,9 @@
 			<option value='23:00:00-24:00:00'>23.00 - 24.00</option>
 			
 		</select>
-		
-			
-			<input class='submitbutton' type='submit' value='Submit'>
-            </form>
-	
+      
+	 <input type="button" id="searchForm" onClick="SubmitForm();" value="Submit" />
+         </form>
 	</div>
 	<div class="query-builder-footer">
 	</div>
@@ -176,25 +188,22 @@
 		<table id="alerts" style="width:100%;">
 	            <?php checkAlert(); ?>
 	        </table>
-	       
 	        <script>
-			$('input[type="button"]').click(function(e){
-		   	$(this).closest('tr').remove()
+			$('button[type="button"]').click(function(e){
+			var alerts = $(this).closest('tr').find("button[name='buttonID']").val();
+		    $(this).closest('tr').remove()
+			var Select = "remove";
+           	$.post("submit.php", { Select: Select, alerts: alerts },
+			function(data) {
+				$(".query-form").html(data);
+			 });
 			})
 		</script>
 	</div>
-	<div class="query-form">
-		<?php 
-			 $type = $_GET['type'];
-			 if ($type == 1){
-			 	readSpecifcTimeTrades($_GET['dAte'],$_GET['startTime'],$_GET['endTime']);
-				}
-			 else if ($type == 2){
-			 	readSpecficComms($_GET['dAte'],$_GET['startTime'],$_GET['endTime']);
-				}
-			 else if ($type == 3){
-			 	print $_GET['name'];
-			 }
+    <?php 
+			 $firstPageDesign = "<div class='query-form'>Build your own Queries on the right :D";
+			 echo $firstPageDesign;
+	
 		?>
 	</div>
 	</body>
