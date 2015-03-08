@@ -23,7 +23,7 @@
 			}}
 </script>
 <script>
-function like(placeholder) {
+			function like(placeholder) {
      		var name =  $(placeholder).attr('rel');
          	var Select = "alerts";
            	$.post("submit.php", { name: name, Select: Select },
@@ -32,7 +32,7 @@ function like(placeholder) {
 			 });
 		}
 </script>
-	</head>
+ 	</head>
 	<body>
 	<?php include 'submit.php'; ?>
 	<div class="header">
@@ -41,10 +41,9 @@ function like(placeholder) {
 			Deutsche Bank Trade Analysis
 		</div>
 	</div>
-  
 	<div class="query-builder" id="alert" >
 	<h3>Query Builder:</h3>
-      <form name="pInfo" method="post" enctype="multipart/form-data" action="submit.php" id="pInfo">
+     <form name="pInfo" method="post" enctype="multipart/form-data" action="submit.php" id="pInfo">
 		<select id="type" name ="Select" class='inputstyle' style='width:260px; margin-left:15px; margin-right:15px;'>
 			<option value="" disabled selected>Select Trades or Communications</option>
 			<option value='Trades'>Trades</option>
@@ -178,11 +177,9 @@ function like(placeholder) {
 			<option value='23:00:00-24:00:00'>23.00 - 24.00</option>
 			
 		</select>
-		
-			
-		 <input type="button" id="searchForm" onClick="SubmitForm();" value="Submit" />
-            </form>
-	
+      
+	 <input type="button" id="searchForm" onClick="SubmitForm();" value="Submit" />
+         </form>
 	</div>
 	<div class="query-builder-footer">
 	</div>
@@ -191,14 +188,18 @@ function like(placeholder) {
 		<table id="alerts" style="width:100%;">
 	            <?php checkAlert(); ?>
 	        </table>
-	       
 	        <script>
-			$('input[type="button"]').click(function(e){
-		   	$(this).closest('tr').remove()
+			$('button[type="button"]').click(function(e){
+			var alerts = $(this).closest('tr').find("button[name='buttonID']").val();
+		    $(this).closest('tr').remove()
+			var Select = "remove";
+           	$.post("submit.php", { Select: Select, alerts: alerts },
+			function(data) {
+				$(".query-form").html(data);
+			 });
 			})
 		</script>
 	</div>
-	<div class="query-form">
     <?php 
 			 $firstPageDesign = "<div class='query-form'>Build your own Queries on the right :D";
 			 echo $firstPageDesign;
