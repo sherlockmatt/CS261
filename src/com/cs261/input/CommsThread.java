@@ -1,9 +1,12 @@
 package com.cs261.input;
 
+import com.cs261.analysis.Analyser;
+
 import java.io.*;
 import java.net.Socket;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 // This code takes the input stream and then outputs it to a csv file. However now does it within a thread so other code may be used. Also it will now run until an interrupt is used (Ctrl-C).
 
@@ -28,23 +31,11 @@ public class CommsThread implements Runnable {
             final Socket echoSocket = new Socket(hostName, portNumber);
             // Establish a socket using the chosen host and port.
 
-            Runtime.getRuntime().addShutdownHook(new Thread() {
-                // Code run when program is stopped via Ctrl+c
-                public void run() {
-                    try {
-                        System.out.println("Ctrl-c caught");
-                        outputTrades.close(); // Close link to file output.
-                        echoSocket.close(); // Close link to socket.
-                    } catch (IOException IOEx) {
-                        IOEx.printStackTrace();
-                    }
-                }
-
-            });
+            Analyser analyser = new Analyser(10);  //Tweak this value later   <-----------           <-----------               <------------             <------------
+            boolean analyse = true;
+            boolean ignoreFirst = true;
 
             try {
-
-
                 BufferedReader tradesocket = new BufferedReader(new InputStreamReader(echoSocket.getInputStream())); // Begin reading from socket.
                 String lineinput; // String to hold each line read in.
                 String[] lineseperated; // String array to separate into individual data e.g. date, buyer, seller
@@ -62,7 +53,19 @@ public class CommsThread implements Runnable {
                             outputTrades.append(",");
                         }
                     }
+                    if (!ignoreFirst) analyser.addNode(lineseperated, 0, 0); //Calculate the x,y later        <-----------            <------------         <--------------
+                    ignoreFirst = false;
+                    if (Thread.interrupted()) {
+                        throw new InterruptedException();
+                    } else if (Calendar.getInstance().get(Calendar.MINUTE) % 5 == 0 && analyse) { //Every 5 minutes
+                        analyser.analyse();
+                        analyse = false;
+                    } else if (Calendar.getInstance().get(Calendar.MINUTE) % 5 == 1) { // 1min after that ^
+                        analyse = true;
+                    }
                 }
+            } catch (InterruptedException e) {
+                System.out.println("Ctrl-c caught (trades)");
             } finally { // Runs after try whether success or fail.
                 outputTrades.close(); // Close link to file output.
                 echoSocket.close(); // Close link to socket.

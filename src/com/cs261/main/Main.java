@@ -8,6 +8,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 // This code takes the input stream and then outputs it to a csv file. However now does it within a thread so other code may be used. Also it will now run until an interrupt is used (Ctrl-C).
 
@@ -17,6 +18,8 @@ public class Main {
 
 
     public static void main(String[] args) throws IOException {
+
+        final Object event = new Object();
 
         DateFormat dateFormatForCheck = new SimpleDateFormat("yyyyMMdd");
         //get current date time with Date()
@@ -39,9 +42,12 @@ public class Main {
         });
 
         if (trades.length > 0) {
+            Calendar cal = Calendar.getInstance();
             for (File file : trades) {
                 String name = file.getName();
-                Date fileDate = new Date(Integer.parseInt(name.substring(0, 4)) + 12 * Integer.parseInt(name.substring(5, 6)) + 7 * Integer.parseInt(name.substring(7, 8)));
+                cal.set(Integer.parseInt(name.substring(0, 4)), Integer.parseInt(name.substring(4, 6)) - 1, Integer.parseInt(name.substring(6, 8)));
+                Date fileDate = cal.getTime();
+                System.out.println(dateFormatForCheck.format(fileDate) + " " + fileDate.before(cutoffdate));
                 if (fileDate.before(cutoffdate)) {
                     if (!file.delete()) {
                         throw new IOException("Could not delete file " + file.getName());
@@ -50,9 +56,12 @@ public class Main {
             }
         }
         if (comms.length > 0) {
+            Calendar cal = Calendar.getInstance();
             for (File file : comms) {
                 String name = file.getName();
-                Date fileDate = new Date(Integer.parseInt(name.substring(0, 4)) + 12 * Integer.parseInt(name.substring(5, 6)) + 7 * Integer.parseInt(name.substring(7, 8)));
+                cal.set(Integer.parseInt(name.substring(0, 4)), Integer.parseInt(name.substring(4, 6)) - 1, Integer.parseInt(name.substring(6, 8)));
+                Date fileDate = cal.getTime();
+                System.out.println(dateFormatForCheck.format(fileDate) + " " + fileDate.before(cutoffdate));
                 if (fileDate.before(cutoffdate)) {
                     if (!file.delete()) {
                         throw new IOException("Could not delete file " + file.getName());
@@ -68,7 +77,47 @@ public class Main {
         Commsthread.start(); // Runs new thread.
         System.out.println("Should occur before thread finishes thread");
 
-
+        synchronized (event) {
+            while (true) { //This loop waits until after 00:30, so that it doesn't start-stop-start-stop etc
+                try {
+                    event.wait(5 * 60 * 1000);
+                    Calendar cal = Calendar.getInstance();
+                    if (cal.get(Calendar.HOUR_OF_DAY) == 0 && cal.get(Calendar.MINUTE) > 30) {
+                        break;
+                    }
+                } catch (InterruptedException e) {
+                    return;
+                }
+            }
+            while (true) {
+                try {
+                    event.wait(1 * 60 * 1000); //One minute timeout
+                    Calendar cal = Calendar.getInstance();
+                    if (cal.get(Calendar.HOUR_OF_DAY) == 0 && cal.get(Calendar.MINUTE) < 30) {
+                        //Shut down at some point between 00:00 and 00:30
+                        Tradethread.interrupt();
+                        Tradethread.join();
+                        Commsthread.interrupt();
+                        Commsthread.join();
+                        //Start a new process
+                        ProcessBuilder pb = new ProcessBuilder("java", "Main");
+                        pb.directory(new File("/src/com/cs261/main/"));
+                        File log = new File("log");
+                        pb.redirectErrorStream(true);
+                        pb.redirectOutput(ProcessBuilder.Redirect.appendTo(log));
+                        Process p = pb.start();
+                        assert pb.redirectInput() == ProcessBuilder.Redirect.PIPE;
+                        assert pb.redirectOutput().file() == log;
+                        assert p.getInputStream().read() == -1;
+                        //Analysisthread.interrupt();
+                        throw new InterruptedException();
+                    }
+                } catch (InterruptedException e) {
+                    System.out.println("Main thread interrupted, exiting...");
+                    break;
+                }
+            }
+        }
     }
 }
 
