@@ -5,36 +5,35 @@
 	<title>Software Engineering Project</title>
 		<link rel="stylesheet" href="se.css" type="text/css" />
      <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script>
+	 <script>
 			function SubmitForm() {
-			var Select = document.forms["pInfo"]["Select"].value;
-			var time = document.forms["pInfo"]["time"].value;
-			var date = document.forms["pInfo"]["dAte"].value;
-			
-			if (Select == null || Select == "" || time == null || time =="" || date == "null" || date == "" ) {
-				 alert("Please Select trades or communication, Date and Time. Thank You");
-				 return false;
-				}
-				else {
-			   $.post("submit.php", { Select: Select, time: time, date: date },
-			   function(data) {
-					$(".query-form").html(data);
-			   });
+				var Select = document.forms["pInfo"]["Select"].value;
+				var time = document.forms["pInfo"]["time"].value;
+				var date = document.forms["pInfo"]["dAte"].value;
+				
+				if (Select == null || Select == "" || time == null || time =="" || date == "null" || date == "" ) {
+						 alert("Please Select trades or communication, Date and Time. Thank You");
+						 return false;
+					}
+					else {
+					   $.post("submit.php", { Select: Select, time: time, date: date },
+					   function(data) {
+							$(".query-form").html(data);
+				   });
 			}}
-</script>
-<script>
+    </script>
+	<script>
 			function like(placeholder) {
-     		var name =  $(placeholder).attr('rel');
-         	var Select = "alerts";
-           	$.post("submit.php", { name: name, Select: Select },
-			function(data) {
-					$(".query-form").html(data);
-			 });
-		}
-</script>
+				var name =  $(placeholder).attr('rel');
+				var Select = "alerts";
+				$.post("submit.php", { name: name, Select: Select },
+				function(data) {
+						$(".query-form").html(data);
+				 });
+			}
+    </script>
  	</head>
-	
-    <body>
+	<body>
 	<?php include 'submit.php'; ?>
 	<div class="header">
 		<img class="DB-logo" src="DB.gif" alt="Deutsche Bank Logo">
@@ -43,6 +42,15 @@
 		</div>
 	</div>
 	<div class="query-builder" id="alert" >
+		<div class="query-builder-help" id="alert" >
+			<input type="button" class="remove" value="?" id='help'>
+			<script type="text/javascript"> 
+				$("#help").click(function() {
+		    		$("#helpOverlay").toggle();
+		    		$("#helpBox").toggle();
+				});
+			</script>
+		</div>
 	<h3>Query Builder:</h3>
      <form name="pInfo" method="post" enctype="multipart/form-data" action="submit.php" id="pInfo">
 		<select id="type" name ="Select" class='inputstyle' style='width:260px; margin-left:15px; margin-right:15px;'>
@@ -93,7 +101,9 @@
 				five.setDate(today.getDate()-5);
 				document.write(five.getDate() + "/" + (five.getMonth()+1) + "/" + five.getFullYear());
 				</script>
+
 			</option>
+
 		<?php  echo "<option value=".date("Ymd", strtotime('-6 day')).">"; ?>
 			 	<script type="text/javascript">
 				var six = new Date();
@@ -179,7 +189,7 @@
 			
 		</select>
       
-	 <input type="button" id="searchForm" onClick="SubmitForm();" value="Submit" />
+	 <input type="button" class='submitbutton' id="searchForm" onClick="SubmitForm();" value="Submit" />
          </form>
 	</div>
 	<div class="query-builder-footer">
@@ -190,22 +200,39 @@
 	            <?php checkAlert(); ?>
 	        </table>
 	        <script>
-			$('button[type="button"]').click(function(e){
-			var alerts = $(this).closest('tr').find("button[name='buttonID']").val();
-		    $(this).closest('tr').remove()
-			var Select = "remove";
-           	$.post("submit.php", { Select: Select, alerts: alerts },
-			function(data) {
-				$(".query-form").html(data);
-			 });
-			})
+				$('button[type="button"]').click(function(e){
+					var alerts = $(this).closest('tr').find("button[name='buttonID']").val();
+					$(this).closest('tr').remove()
+					var Select = "remove";
+					$.post("submit.php", { Select: Select, alerts: alerts },
+					function(data) {
+						$(".query-form").html(data);
+					 });
+				})
 		</script>
 	</div>
     <?php 
-			 $firstPageDesign = "<div class='query-form'>Build your own Queries on the right :D";
+			 $firstPageDesign = "<div class='query-form'>Build your own Queries on the left :D";
 			 echo $firstPageDesign;
 	
 		?>
 	</div>
+	<div id='helpOverlay'>
+		<script type="text/javascript"> 
+			$("#helpOverlay").click(function() {
+				$("#helpOverlay").toggle();
+				$("#helpBox").toggle();	
+	
+			});
+		</script>
+	</div>
+	<div id='helpBox'>
+	<h4>Help: Query Builder</h4>
+	The Query Builder allows you to view any data from trades or communications from the past two weeks. Using the drop down boxes below: <br>
+	1. Select whether you would like to view trade data or communications. <br>
+	2. Select the date <br>
+	3. Select a time slot <br> 
+	</div>
+	
 	</body>
 	</html>
