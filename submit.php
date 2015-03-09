@@ -1,57 +1,67 @@
 <?php 
 if ($_POST['Select'] == 'Trades'){
-
 	$startTime = substr($_POST['time'], 0,8);
 	$endTime =  substr($_POST['time'], 9);
 	$dAte = $_POST['date'];
 	exec('java -jar FileName.jar '.$dAte.' '. $startTime.' '.$endTime.'', $output);
-	print_r($output); // print 
+	print_r($output); // print array
 }
 else if ($_POST['Select'] == 'Communications'){
-	
 	$startTime = substr($_POST['time'], 0,8);
 	$endTime =  substr($_POST['time'], 9);
 	$dAte = $_POST['date'];
 	exec('java -jar FileName.jar '.$dAte.' '. $startTime.' '.$endTime.'', $output);
-	print_r($output); // print 
+	print_r($output); // print array
 }
 
 else if ($_POST['Select'] == 'alerts')
-
 {
-	$fileName = $_POST['name'];
-	try {
-		readSpecifcTimeTrades($fileName);
-	} catch(Exception $e) {
-	
-       echo $e->getMessage(), "\n";
-	}
-	
+	error_reporting(0);
+	if( substr($_POST['name'],0,4) == "Trades") {
+		$fileName = $_POST['name'];
+		try {
+				readSpecifcTimeTrades($fileName);
+			
+			} catch(Exception $e) {
+		  	  	echo $e->getMessage(), "\n";
+				}
+		}
+	 else {
+	 	$fileName = $_POST['name'];
+		try {
+				readSpecficComms($fileName);
+			} catch(Exception $e) {
+		  	  	echo $e->getMessage(), "\n";
+				}
+		}
 }
 
 else if ($_POST['Select'] == "remove"){
-
+	error_reporting(0);
 	$removeAlert = $_POST['alerts'];
-	rename("alerts/".$removeAlert."", "Remove/".$removeAlert."") or die ("Failed to move file.");
+	if (rename("alerts/".$removeAlert."", "Remove/".$removeAlert."") === false)
+	{
+		echo "</br>File had been deleted by other users. Please check the archive folder";
+	} 
+
 }
 
 function readSpecifcTimeTrades(&$fileName){
 
-if (!fopen("data/".$fileName."comms.csv", "r"))
+if (fopen("alerts/".$fileName, "r") === false)
 {	
-	throw new Exception('File had been deleted by other users. Please check the archieve folder');	
+	throw new Exception('</br> File had been deleted by other users. Please check the archive folder');	
 }	
 else
 {
-$file_handle = fopen("data/".$fileName."trades.csv", "r") or die ("Cant get file");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file.
+$file_handle = fopen("alerts/".$fileName, "r") or die ("Cant get file");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file.
 
 echo "<table id = 'comms' style='width:100%;'>";	
 
 while (!feof($file_handle) ) { // While loop, to open all of the files 	
 
 $trades = fgetcsv($file_handle, 1024);  // Array of results
-if (substr($trades[0],11,19) >= $startTime && substr($trades[0],11,19) <= $endTime)
-{
+
  echo "<tr> <th width='15%;'> ".$trades[0] . " </th>";
  echo "<th width='12%;'> ".$trades[1] ." </th>";
  echo "<th width='12%;'> ".$trades[2] ." </th>" ; // Printing the results
@@ -63,35 +73,33 @@ if (substr($trades[0],11,19) >= $startTime && substr($trades[0],11,19) <= $endTi
  echo "<th width='5%;'> ".$trades[8] ." </th>" ; // Printing the results		<br>
  echo "<th width='5%;'> ".$trades[9] ." </th>" ; // Printing the results		<br>
  echo "</tr>";
-}	}
+}	
 echo "</table>";
 
 fclose($file_handle); // close
 }}
 
-function readSpecficComms(&$startDate,&$startTime,&$endTime) {
+function readSpecficComms(&$fileName) {
 
-if (!fopen("data/".$startDate."comms.csv", "r"))
+if (fopen("alerts/".$fileName, "r") === false)
 {	
-	throw new Exception('File had been deleted by other users. Please check the archive folder');	
+	throw new Exception('</br> File had been deleted by other users. Please check the archive folder');	
 }	
-
-$file_handle = fopen("data/".$startDate."comms.csv", "r") or die ("Cant get file");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file
+else 
+{
+$file_handle = fopen("alerts/".$fileName, "r") or die ("Cant get file");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file
 
 echo "<table id = 'comms' style='width:100%;'>";
 while (!feof($file_handle) ) { // While loop, to open all of the files 	
 $comms = fgetcsv($file_handle, 1024);  // Array of results
-if (substr($comms[0],11,19) >= $startTime && substr($comms[0],11,19) <= $endTime)
-{
-
- echo "<tr> <th width='20%;'> ".$comms[0] . " </th>";
+ echo "<tr> <th width='20%;'> ".$comms[0]. "  </th>";
  echo "<th width='20%;'> ".$comms[1] ." </th>";
  echo "<th width='60%;'> ".$comms[2] ." </th>" ; // Printing the results
  echo "</tr>";
-} }
+} 
 echo "</table>";
 fclose($file_handle); // close
-}
+}}
 
 function checkAlert() {
 

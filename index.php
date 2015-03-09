@@ -5,36 +5,35 @@
 	<title>Software Engineering Project</title>
 		<link rel="stylesheet" href="se.css" type="text/css" />
      <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script>
+	 <script>
 			function SubmitForm() {
-			var Select = document.forms["pInfo"]["Select"].value;
-			var time = document.forms["pInfo"]["time"].value;
-			var date = document.forms["pInfo"]["dAte"].value;
-			
-			if (Select == null || Select == "" || time == null || time =="" || date == "null" || date == "" ) {
-				 alert("Please Select trades or communication, Date and Time. Thank You");
-				 return false;
-				}
-				else {
-			   $.post("submit.php", { Select: Select, time: time, date: date },
-			   function(data) {
-					$(".query-form").html(data);
-			   });
+				var Select = document.forms["pInfo"]["Select"].value;
+				var time = document.forms["pInfo"]["time"].value;
+				var date = document.forms["pInfo"]["dAte"].value;
+				
+				if (Select == null || Select == "" || time == null || time =="" || date == "null" || date == "" ) {
+						 alert("Please Select trades or communication, Date and Time. Thank You");
+						 return false;
+					}
+					else {
+					   $.post("submit.php", { Select: Select, time: time, date: date },
+					   function(data) {
+							$(".query-form").html(data);
+				   });
 			}}
-</script>
-<script>
+    </script>
+	<script>
 			function like(placeholder) {
-     		var name =  $(placeholder).attr('rel');
-         	var Select = "alerts";
-           	$.post("submit.php", { name: name, Select: Select },
-			function(data) {
-					$(".query-form").html(data);
-			 });
-		}
-</script>
+				var name =  $(placeholder).attr('rel');
+				var Select = "alerts";
+				$.post("submit.php", { name: name, Select: Select },
+				function(data) {
+						$(".query-form").html(data);
+				 });
+			}
+    </script>
  	</head>
-	
-    <body>
+	<body>
 	<?php include 'submit.php'; ?>
 	<div class="header">
 		<img class="DB-logo" src="DB.gif" alt="Deutsche Bank Logo">
@@ -102,7 +101,9 @@
 				five.setDate(today.getDate()-5);
 				document.write(five.getDate() + "/" + (five.getMonth()+1) + "/" + five.getFullYear());
 				</script>
+
 			</option>
+
 		<?php  echo "<option value=".date("Ymd", strtotime('-6 day')).">"; ?>
 			 	<script type="text/javascript">
 				var six = new Date();
@@ -199,19 +200,19 @@
 	            <?php checkAlert(); ?>
 	        </table>
 	        <script>
-			$('button[type="button"]').click(function(e){
-			var alerts = $(this).closest('tr').find("button[name='buttonID']").val();
-		    $(this).closest('tr').remove()
-			var Select = "remove";
-           	$.post("submit.php", { Select: Select, alerts: alerts },
-			function(data) {
-				$(".query-form").html(data);
-			 });
-			})
+				$('button[type="button"]').click(function(e){
+					var alerts = $(this).closest('tr').find("button[name='buttonID']").val();
+					$(this).closest('tr').remove()
+					var Select = "remove";
+					$.post("submit.php", { Select: Select, alerts: alerts },
+					function(data) {
+						$(".query-form").html(data);
+					 });
+				})
 		</script>
 	</div>
     <?php 
-			 $firstPageDesign = "<div class='query-form'>Build your own Queries on the right :D";
+			 $firstPageDesign = "<div class='query-form'>Build your own Queries on the left :D";
 			 echo $firstPageDesign;
 	
 		?>
