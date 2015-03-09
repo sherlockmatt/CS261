@@ -5,7 +5,7 @@ if ($_POST['Select'] == 'Trades'){
 	$endTime =  substr($_POST['time'], 9);
 	$dAte = $_POST['date'];
 	exec('java -jar FileName.jar '.$dAte.' '. $startTime.' '.$endTime.'', $output);
-	print_r($output); // print array
+	print_r($output); // print 
 }
 else if ($_POST['Select'] == 'Communications'){
 	
@@ -13,7 +13,7 @@ else if ($_POST['Select'] == 'Communications'){
 	$endTime =  substr($_POST['time'], 9);
 	$dAte = $_POST['date'];
 	exec('java -jar FileName.jar '.$dAte.' '. $startTime.' '.$endTime.'', $output);
-	print_r($output); // print array
+	print_r($output); // print 
 }
 
 else if ($_POST['Select'] == 'alerts')
