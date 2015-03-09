@@ -40,7 +40,7 @@ else if ($_POST['Select'] == "remove"){
 	error_reporting(0);
 	$removeAlert = $_POST['alerts'];
 	
-	if (rename("alerts/".$removeAlert."", "Remove/".$removeAlert."") === false)
+	if (rename("alerts/".$removeAlert."", "archive/".$removeAlert."") === false)
 	{
 		echo "</br>File had been deleted by other users. Please check the archive folder";
 	} 
