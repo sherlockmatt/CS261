@@ -187,7 +187,7 @@
 			
 		</select>
       
-	 <input type="button" id="searchForm" onClick="SubmitForm();" value="Submit" />
+	 <input type="button" class='submitbutton' id="searchForm" onClick="SubmitForm();" value="Submit" />
          </form>
 	</div>
 	<div class="query-builder-footer">
