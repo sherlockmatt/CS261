@@ -33,7 +33,8 @@
 		}
 </script>
  	</head>
-	<body>
+	
+    <body>
 	<?php include 'submit.php'; ?>
 	<div class="header">
 		<img class="DB-logo" src="DB.gif" alt="Deutsche Bank Logo">
