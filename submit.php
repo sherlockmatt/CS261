@@ -17,7 +17,7 @@ else if ($_POST['Select'] == 'Communications'){
 	$day = substr($_POST['date'], 6);
 	$query = $year." ".$month." ".$day." ".$startTime;
 	exec('java -cp DBA.jar com.cs261.output.QueryPrinter Comms '.$query.'', $output);
-	print_r($output); // print array
+	print_r($output); // print 
 }
 
 else if ($_POST['Select'] == 'alerts')
