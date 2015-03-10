@@ -1,14 +1,14 @@
 <?php 
 if ($_POST['Select'] == 'Trades'){
-	$startTime = substr($_POST['time'], 0,8);
-	$endTime =  substr($_POST['time'], 9);
+	$startTime = substr($_POST['time'], 0,2);
+	$endTime =  substr($_POST['time'], 9,-6);
 	$dAte = $_POST['date'];
 	exec('java -jar FileName.jar '.$dAte.' '. $startTime.' '.$endTime.'', $output);
 	print_r($output); // print array
 }
 else if ($_POST['Select'] == 'Communications'){
-	$startTime = substr($_POST['time'], 0,8);
-	$endTime =  substr($_POST['time'], 9);
+	$startTime = substr($_POST['time'], 0,2);
+	$endTime =  substr($_POST['time'], 9,-6);
 	$dAte = $_POST['date'];
 	exec('java -jar FileName.jar '.$dAte.' '. $startTime.' '.$endTime.'', $output);
 	print_r($output); // print array
@@ -40,7 +40,7 @@ else if ($_POST['Select'] == "remove"){
 	error_reporting(0);
 	$removeAlert = $_POST['alerts'];
 	
-	if (rename("alerts/".$removeAlert."", "archive/".$removeAlert."") === false)
+	if (rename("alerts/".$removeAlert."", "Remove/".$removeAlert."") === false)
 	{
 		echo "</br>File had been deleted by other users. Please check the archive folder";
 	} 
