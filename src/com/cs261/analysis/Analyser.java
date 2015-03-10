@@ -40,7 +40,7 @@ public class Analyser {
             while ((line = br.readLine()) != null) {
                 lineseperated = line.split(",");
                 if (isLineInTime(lineseperated, query.getTime())) {
-                    this.addNode(lineseperated, 0, 0); //Calculate the x,y later        <-----------            <------------               <--------------                 <----------------
+                    this.addNode(lineseperated, 0, 0); //Copy the x,y from trades/comms later            <------------               <--------------                 <----------------
                 }
             }
         } catch(IOException e) {
@@ -66,6 +66,7 @@ public class Analyser {
                 }
             }
             if (connectedComponent.size() > Reference.CLUSTER_LOWER_BOUND && connectedComponent.size() < Reference.CLUSTER_UPPER_BOUND) {
+                connectedComponent.add(new Node(-1, query.getType().equals("Trades") ? Reference.SEPERATOR_TRADES : Reference.SEPERATOR_COMMS, 0,0));
                 output.addAll(connectedComponent);
             }
         }
@@ -90,6 +91,7 @@ public class Analyser {
                 }
             }
             if (connectedComponent.size() > Reference.CLUSTER_LOWER_BOUND && connectedComponent.size() < Reference.CLUSTER_UPPER_BOUND) {
+                connectedComponent.add(new Node(-1, this.getType().equals("Trades") ? Reference.SEPERATOR_TRADES : Reference.SEPERATOR_COMMS, 0,0));
                 output.addAll(connectedComponent);
             }
         }

@@ -58,7 +58,8 @@ public class TradesThread implements Runnable {
                     int time = Integer.parseInt(lineseperated[0].substring(11, 13)) * 60 * 60
                             + Integer.parseInt(lineseperated[0].substring(14, 16)) * 60
                             + Integer.parseInt(lineseperated[0].substring(17, 19));
-                    if (!ignoreFirst) analyser.addNode(lineseperated, time, 0); //Calculate the y later        <-----------            <------------         <--------------
+                    //Calculate the y value later        <-----------            <------------         <--------------          <-------------             <--------------
+                    if (!ignoreFirst) analyser.addNode(lineseperated, time, 0);
                     ignoreFirst = false;
                     if (Thread.interrupted()) {
                         throw new InterruptedException();

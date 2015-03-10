@@ -14,4 +14,7 @@ public class Reference {
     public static final String[] FAILED_TRADES = {"File", "not", "found", "", "", "", "", "", "", ""};
     public static final String[] FAILED_COMMS = {"File", "not", "found"};
 
+    public static final String[] SEPERATOR_TRADES = {"---", "---", "---", "---", "---", "---", "---", "---", "---", "---"};
+    public static final String[] SEPERATOR_COMMS = {"---", "---", "---"};
+
 }
