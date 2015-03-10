@@ -1,6 +1,7 @@
 package com.cs261.input;
 
 import com.cs261.analysis.Analyser;
+import com.cs261.main.Reference;
 
 import java.io.*;
 import java.net.Socket;
@@ -31,7 +32,7 @@ public class CommsThread implements Runnable {
             final Socket echoSocket = new Socket(hostName, portNumber);
             // Establish a socket using the chosen host and port.
 
-            Analyser analyser = new Analyser(10);  //Tweak this value later   <-----------           <-----------               <------------             <------------
+            Analyser analyser = new Analyser("Comms", Reference.RADIUS);
             boolean analyse = true;
             boolean ignoreFirst = true;
 
@@ -57,10 +58,10 @@ public class CommsThread implements Runnable {
                     ignoreFirst = false;
                     if (Thread.interrupted()) {
                         throw new InterruptedException();
-                    } else if (Calendar.getInstance().get(Calendar.MINUTE) % 5 == 0 && analyse) { //Every 5 minutes
+                    } else if (Calendar.getInstance().get(Calendar.MINUTE) % Reference.TIME_INTERVAL == 0 && analyse) { //Every 5 minutes
                         analyser.analyse();
                         analyse = false;
-                    } else if (Calendar.getInstance().get(Calendar.MINUTE) % 5 == 1) { // 1min after that ^
+                    } else if (Calendar.getInstance().get(Calendar.MINUTE) % Reference.TIME_INTERVAL == 1) { // 1min after that ^
                         analyse = true;
                     }
                 }

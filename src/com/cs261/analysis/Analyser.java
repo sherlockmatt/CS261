@@ -1,9 +1,14 @@
 package com.cs261.analysis;
 
 import com.cs261.main.Query;
+import com.cs261.main.Reference;
 import com.cs261.output.AlertPrinter;
-import com.cs261.output.QueryPrinter;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -12,16 +17,38 @@ public class Analyser {
 
     private Graph graph;
     private int radius;
+    private String type;
 
-    public Analyser(int radius) {
+    public Analyser(String type, int radius) {
+        this.setType(type);
         this.graph = new Graph();
         this.radius = radius;
     }
 
     public List<Node> analyse(Query query) {
         //Set stuff based on query
+        DateFormat dateFormatForCheck = new SimpleDateFormat("yyyyMMdd");
+        String dateStr = dateFormatForCheck.format(query.getDate());
+        String fileName = "data/" + dateStr + query.getType().toLowerCase() + "store.csv";
+        BufferedReader br;
+        try {
+            br = new BufferedReader(new FileReader(fileName));
 
-        //Add everything to the graph
+            //Add everything to the graph
+            String line;
+            String[] lineseperated;
+            while ((line = br.readLine()) != null) {
+                lineseperated = line.split(",");
+                if (isLineInTime(lineseperated, query.getTime())) {
+                    this.addNode(lineseperated, 0, 0); //Calculate the x,y later        <-----------            <------------               <--------------                 <----------------
+                }
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+            List<Node> output = new ArrayList<Node>(1);
+            output.add(new Node(0, (this.getType().equals("Trades")) ? Reference.FAILED_TRADES : Reference.FAILED_COMMS, 0, 0));
+            return output;
+        }
 
         //Perform DFS to find all connected components
         List<Node> nodes = this.graph.getAllNodes();
@@ -38,7 +65,7 @@ public class Analyser {
                     stack.push(n2);
                 }
             }
-            if (connectedComponent.size() > 3 && connectedComponent.size() < 1000) {//Sensitivity values, will likely need tweaking        <════════        <═════════
+            if (connectedComponent.size() > Reference.CLUSTER_LOWER_BOUND && connectedComponent.size() < Reference.CLUSTER_UPPER_BOUND) {
                 output.addAll(connectedComponent);
             }
         }
@@ -62,12 +89,12 @@ public class Analyser {
                     stack.push(n2);
                 }
             }
-            if (connectedComponent.size() > 3 && connectedComponent.size() < 1000) {//Sensitivity values, will likely need tweaking        <════════        <═════════
+            if (connectedComponent.size() > Reference.CLUSTER_LOWER_BOUND && connectedComponent.size() < Reference.CLUSTER_UPPER_BOUND) {
                 output.addAll(connectedComponent);
             }
         }
 
-        AlertPrinter printer = new AlertPrinter(output);
+        AlertPrinter printer = new AlertPrinter(this.getType(), output);
         printer.print();
     }
 
@@ -87,7 +114,20 @@ public class Analyser {
         return this.graph.getConnected(node);
     }
 
-    public void updateRadius(int radius) {
+    public boolean isLineInTime(String[] line, int time) {
+        int lineTime = Integer.parseInt(line[0].substring(11, 13));
+        return lineTime == time;
+    }
+
+    public void setRadius(int radius) {
         this.radius = radius;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
