@@ -1,6 +1,7 @@
 package com.cs261.input;
 
 import com.cs261.analysis.Analyser;
+import com.cs261.main.Main;
 import com.cs261.main.Reference;
 
 import java.io.*;
@@ -55,11 +56,16 @@ public class TradesThread implements Runnable {
                             outputTrades.append(",");
                         }
                     }
-                    int time = Integer.parseInt(lineseperated[0].substring(11, 13)) * 60 * 60
-                            + Integer.parseInt(lineseperated[0].substring(14, 16)) * 60
-                            + Integer.parseInt(lineseperated[0].substring(17, 19));
-                    //Calculate the y value later        <-----------            <------------         <--------------          <-------------             <--------------
-                    if (!ignoreFirst) analyser.addNode(lineseperated, time, 0);
+                    if (!ignoreFirst) {
+                        int x = Integer.parseInt(lineseperated[0].substring(11, 13)) * 60 * 60
+                                + Integer.parseInt(lineseperated[0].substring(14, 16)) * 60
+                                + Integer.parseInt(lineseperated[0].substring(17, 19));
+                        int y = 0;
+                        for (int i = 1; i < 14; i++) {
+                            y += Math.abs(Integer.parseInt(lineseperated[9]) - Main.tradesAverages.get(Integer.parseInt(lineseperated[0].substring(6, 8)) - i).get(lineseperated[6])); //I think :3
+                        }
+                        analyser.addNode(lineseperated, x, y);
+                    }
                     ignoreFirst = false;
                     if (Thread.interrupted()) {
                         throw new InterruptedException();

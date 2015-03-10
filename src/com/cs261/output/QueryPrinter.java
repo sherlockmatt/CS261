@@ -22,17 +22,18 @@ public class QueryPrinter {
         this.analyser = new Analyser(query.getType(), Reference.RADIUS);
     }
 
-    public static void main(String[] args) { //Call this like "java class type year month date time" N.B. time should be the hour only i.e. 17
+    public static void main(String[] args) { //Call this like "java -jar class type year month date time" N.B. time should be the hour only i.e. 17
         int year = Integer.parseInt(args[1]);
         int month = Integer.parseInt(args[2]);
         int date = Integer.parseInt(args[3]);
         Calendar cal = Calendar.getInstance();
-        cal.set(year, month, date);
+        cal.set(year, month - 1, date);
         try {
-            BufferedReader br = new BufferedReader(new FileReader("data/" + year + month + date + args[0].toLowerCase() + "store.csv"));
+            BufferedReader br = new BufferedReader(new FileReader("data/" + args[1] + args[2] + args[3] + args[0].toLowerCase() + "store.csv"));
             headers = br.readLine().split(",");
         } catch (IOException e) {
             e.printStackTrace();
+            return;
         }
         Query newQuery = new Query(args[0], headers, cal.getTime(), Integer.parseInt(args[4]));
         QueryPrinter printer = new QueryPrinter(newQuery);

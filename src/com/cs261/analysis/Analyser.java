@@ -1,5 +1,6 @@
 package com.cs261.analysis;
 
+import com.cs261.main.Main;
 import com.cs261.main.Query;
 import com.cs261.main.Reference;
 import com.cs261.output.AlertPrinter;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
@@ -31,16 +33,62 @@ public class Analyser {
         String dateStr = dateFormatForCheck.format(query.getDate());
         String fileName = "data/" + dateStr + query.getType().toLowerCase() + "store.csv";
         BufferedReader br;
+        HashMap<String, HashMap<String, List<Integer>>> history = new HashMap<String, HashMap<String, List<Integer>>>();
+
         try {
             br = new BufferedReader(new FileReader(fileName));
 
             //Add everything to the graph
             String line;
             String[] lineseperated;
+            line = br.readLine();
             while ((line = br.readLine()) != null) {
                 lineseperated = line.split(",");
                 if (isLineInTime(lineseperated, query.getTime())) {
-                    this.addNode(lineseperated, 0, 0); //Copy the x,y from trades/comms later            <------------               <--------------                 <----------------
+                    int x = Integer.parseInt(lineseperated[0].substring(11, 13)) * 60 * 60
+                            + Integer.parseInt(lineseperated[0].substring(14, 16)) * 60
+                            + Integer.parseInt(lineseperated[0].substring(17, 19));
+
+                    int y = 0;
+                    if (this.getType().equals("Trades")) {
+                        for (int i = 1; i < 14; i++) {
+                            y += Math.abs(Integer.parseInt(lineseperated[9]) - Main.tradesAverages.get(Integer.parseInt(lineseperated[0].substring(6, 8)) - i).get(lineseperated[6])); //I think :3
+                        }
+                    } else {
+                        String sender = lineseperated[1];
+                        String[] receivers = lineseperated[2].split(";");
+                        String trader1;
+                        String trader2;
+                        for (String recv : receivers) {
+                            if (sender.compareTo(recv) < 0) {
+                                trader1 = sender;
+                                trader2 = recv;
+                            } else {
+                                trader1 = recv;
+                                trader2 = sender;
+                            }
+                            if (history.containsKey(trader1)) {
+                                if (history.get(trader1).containsKey(trader2)) {
+                                    List<Integer> list = history.get(trader1).get(trader2);
+                                    for (Integer i : list) {
+                                        if (((i - Integer.parseInt(lineseperated[0].substring(17, 19))) + 60) % 60 > 5) {
+                                            list.remove(i);
+                                        } else {
+                                            y++;
+                                        }
+                                    }
+                                } else {
+                                    history.get(trader1).put(trader2, new ArrayList<Integer>());
+                                }
+                            } else {
+                                history.put(trader1, new HashMap<String, List<Integer>>());
+                                history.get(trader1).put(trader2, new ArrayList<Integer>());
+                            }
+                            history.get(trader1).get(trader2).add(Integer.parseInt(lineseperated[0].substring(17, 19)));
+                        }
+                    }
+
+                    this.addNode(lineseperated, x, y);
                 }
             }
         } catch(IOException e) {
