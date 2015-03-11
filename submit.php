@@ -7,7 +7,11 @@ if ($_POST['Select'] == 'Trades'){
 	$day = substr($_POST['date'], 6);
 	$query = "Trades ".$year." ".$month." ".$day." ".$startTime;
 	exec('java -cp DBA.jar com.cs261.output.QueryPrinter '.$query.'', $output);
-	print ($output[0]); // print array
+	$i = 0;
+	for ($i = 0; $i <= sizeof($output)-1; $i++)
+	{
+		echo $output[$i];
+	}
 }
 else if ($_POST['Select'] == 'Communications'){
 	$startTime = substr($_POST['time'], 0,2);
@@ -17,7 +21,11 @@ else if ($_POST['Select'] == 'Communications'){
 	$day = substr($_POST['date'], 6);
 	$query = "Comms ".$year." ".$month." ".$day." ".$startTime;
 	exec('java -cp DBA.jar com.cs261.output.QueryPrinter '.$query.'', $output);
-	print_r($output); // print 
+	$i = 0;
+	for ($i = 0; $i <= sizeof($output)-1; $i++)
+	{
+		echo $output[$i];
+	}
 }
 
 else if ($_POST['Select'] == 'alerts')
