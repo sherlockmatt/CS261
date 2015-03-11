@@ -7,7 +7,7 @@ if ($_POST['Select'] == 'Trades'){
 	$day = substr($_POST['date'], 6);
 	$query = "Trades ".$year." ".$month." ".$day." ".$startTime;
 	exec('java -cp DBA.jar com.cs261.output.QueryPrinter '.$query.'', $output);
-	print_r($output); // print array
+	print ($output[0]); // print array
 }
 else if ($_POST['Select'] == 'Communications'){
 	$startTime = substr($_POST['time'], 0,2);
