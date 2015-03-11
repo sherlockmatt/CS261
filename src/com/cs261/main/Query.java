@@ -6,8 +6,12 @@ public class Query {
 
     private Date date;
     private int time;
+    private String type;
+    private String[] headers;
 
-    public Query(Date date, int time) {
+    public Query(String type, String[] headers, Date date, int time) {
+        this.setType(type);
+        this.setHeaders(headers);
         this.setDate(date);
         this.setTime(time);
     }
@@ -40,5 +44,21 @@ public class Query {
         } else {
             this.time = time;
         }
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String[] getHeaders() {
+        return headers;
+    }
+
+    public void setHeaders(String[] headers) {
+        this.headers = headers;
     }
 }

@@ -3,19 +3,19 @@ package com.cs261.main;
 import com.cs261.input.CommsThread;
 import com.cs261.input.TradesThread;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 // This code takes the input stream and then outputs it to a csv file. However now does it within a thread so other code may be used. Also it will now run until an interrupt is used (Ctrl-C).
 
 
 public class Main {
 // Implements runnable to allow the change of threads run code.
 
+    public static HashMap<Integer, HashMap<String, Double>> tradesAverages;
 
     public static void main(String[] args) throws IOException {
 
@@ -83,6 +83,7 @@ public class Main {
                     event.wait(5 * 60 * 1000);
                     Calendar cal = Calendar.getInstance();
                     if (cal.get(Calendar.HOUR_OF_DAY) == 0 && cal.get(Calendar.MINUTE) > 30) {
+                        calcAverages(trades);
                         break;
                     }
                 } catch (InterruptedException e) {
@@ -118,6 +119,42 @@ public class Main {
                 }
             }
         }
+    }
+
+    private static void calcAverages(File[] trades) {
+        HashMap<Integer, HashMap<String, Double>> tradesMap = new HashMap<Integer, HashMap<String, Double>>();
+
+        for (File f : trades) {
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(f));
+                String line;
+                String[] lineseperated;
+                String stock;
+                Double cost;
+                HashMap<String, Integer> cntr = new HashMap<String, Integer>();
+                int date = Integer.parseInt(f.getName().substring(6, 8));
+                tradesMap.put(date, new HashMap<String, Double>());
+
+                while ((line = br.readLine()) != null) {
+                    lineseperated = line.split(",");
+                    stock = lineseperated[6];
+                    cost = Double.parseDouble(lineseperated[9]);
+                    int oldCntr = (cntr.containsKey(stock)) ? cntr.get(stock) : 0;
+                    int newCntr = oldCntr + 1;
+                    Double oldAvg = (tradesMap.get(date).containsKey(stock)) ? tradesMap.get(date).get(stock) : 0;
+                    Double newAvg = (oldCntr * oldAvg + cost) / newCntr;
+
+                    if (cntr.containsKey(stock)) cntr.remove(stock);
+                    cntr.put(stock, newCntr);
+                    if (tradesMap.get(date).containsKey(stock)) tradesMap.get(date).remove(stock);
+                    tradesMap.get(date).put(stock, newAvg);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        tradesAverages = tradesMap;
     }
 }
 
