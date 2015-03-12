@@ -2,6 +2,7 @@ package com.cs261.input;
 
 import com.cs261.analysis.Analyser;
 import com.cs261.main.Reference;
+import com.cs261.output.AlertPrinter;
 
 import java.io.*;
 import java.net.Socket;
@@ -12,8 +13,6 @@ import java.util.*;
 
 
 public class CommsThread implements Runnable {
-
-    private static HashMap<String, HashMap<String, List<Integer>>> history;
 
     public void run() { // Threads running code.
         try {
@@ -39,7 +38,7 @@ public class CommsThread implements Runnable {
             boolean ignoreFirst = true;
             int i = 0;            
 
-            history = new HashMap<String, HashMap<String, List<Integer>>>();
+            HashMap<String, HashMap<String, List<Integer>>> history = new HashMap<String, HashMap<String, List<Integer>>>();
 
             try {
                 BufferedReader tradesocket = new BufferedReader(new InputStreamReader(echoSocket.getInputStream())); // Begin reading from socket.
@@ -78,10 +77,11 @@ public class CommsThread implements Runnable {
                             }
                             if (history.containsKey(trader1)) {
                                 if (history.get(trader1).containsKey(trader2)) {
-                                    List<Integer> list = history.get(trader1).get(trader2);
+                                    List<Integer> list = new ArrayList<Integer>();
+                                    list.addAll(history.get(trader1).get(trader2));
                                     for (Integer i : list) {
                                         if (((i - Integer.parseInt(lineseperated[0].substring(17, 19))) + 60) % 60 > 5) {
-                                            list.remove(i);
+                                            history.get(trader1).get(trader2).remove(i);
                                         } else {
                                             y++;
                                         }
@@ -101,7 +101,8 @@ public class CommsThread implements Runnable {
                     if (Thread.interrupted()) {
                         throw new InterruptedException();
                     } else if (Calendar.getInstance().get(Calendar.MINUTE) % Reference.TIME_INTERVAL == 0 && analyse) { //Every 5 minutes
-                        analyser.analyse();
+                        AlertPrinter printer = new AlertPrinter("Comms", analyser.analyse());
+                        printer.print();
                         analyse = false;
                     } else if (Calendar.getInstance().get(Calendar.MINUTE) % Reference.TIME_INTERVAL == 1) { // 1min after that ^
                         analyse = true;

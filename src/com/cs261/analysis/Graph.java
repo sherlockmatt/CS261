@@ -30,7 +30,7 @@ public class Graph {
         for (int i = 0; i < cntr; i++) {
             Node tempNode = nodes.get(i);
             if (Math.sqrt((node.getX() - tempNode.getX())^2 + (node.getY() - tempNode.getY())^2) <= radius) {
-                tempNodes.add(tempNode);
+                if (node != tempNode) tempNodes.add(tempNode);
             }
         }
         return tempNodes;

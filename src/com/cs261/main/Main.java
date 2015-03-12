@@ -70,6 +70,8 @@ public class Main {
             }
         }
 
+        calcAverages(trades);
+
         Thread Tradethread = new Thread(new TradesThread()); // Creates new thread.
         Thread Commsthread = new Thread(new CommsThread()); // Creates new thread.
         System.out.println("Should start the thread");
@@ -83,7 +85,6 @@ public class Main {
                     event.wait(5 * 60 * 1000);
                     Calendar cal = Calendar.getInstance();
                     if (cal.get(Calendar.HOUR_OF_DAY) == 0 && cal.get(Calendar.MINUTE) > 30) {
-                        calcAverages(trades);
                         break;
                     }
                 } catch (InterruptedException e) {
@@ -135,6 +136,7 @@ public class Main {
                 int date = Integer.parseInt(f.getName().substring(6, 8));
                 tradesMap.put(date, new HashMap<String, Double>());
 
+                line = br.readLine(); //Skips the first line
                 while ((line = br.readLine()) != null) {
                     lineseperated = line.split(",");
                     stock = lineseperated[6];

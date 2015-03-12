@@ -38,7 +38,7 @@ public class AlertPrinter {
             }
         });
         if (alerts.length > 0) {
-            this.id = Integer.parseInt(alerts[alerts.length].getName().split(" ")[1]) + 1;
+            this.id = Integer.parseInt(alerts[alerts.length - 1].getName().split(" ")[1]) + 1;
         }
         try {
             PrintWriter outputFile = new PrintWriter(new FileWriter("alerts/" + type + " " + id + ".csv", true));
