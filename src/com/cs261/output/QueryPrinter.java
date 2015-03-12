@@ -11,12 +11,12 @@ public class QueryPrinter {
 
     public static void main(String[] args) { //Call this like "java -jar class type year month date time" N.B. time should be the hour only i.e. 17
         String type = args[0];
-        int year = Integer.parseInt(args[1]);
-        int month = Integer.parseInt(args[2]);
-        int date = Integer.parseInt(args[3]);
+        String year = args[1];
+        String month = args[2];
+        String date = args[3];
         String time = args[4];
         Calendar cal = Calendar.getInstance();
-        cal.set(year, month - 1, date);
+        cal.set(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(date));
         try {
             BufferedReader br = new BufferedReader(new FileReader("data/" + year + month + date + type.toLowerCase() + "store.csv"));
             String[] headers = br.readLine().split(",");
