@@ -9,6 +9,7 @@ if ($_POST['Select'] == 'Trades'){
 	exec('java -cp DBA.jar com.cs261.output.QueryPrinter '.$query.'', $output);
 	for ($i = 0; $i <= sizeof($output)-1; $i++)
 	{
+
 		echo $output[$i];
 	}
 }
