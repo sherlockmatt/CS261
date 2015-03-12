@@ -106,10 +106,10 @@ public class Main {
                         pb.directory(new File("/src/com/cs261/main/"));
                         File log = new File("log");
                         pb.redirectErrorStream(true);
-                        pb.redirectOutput(ProcessBuilder.Redirect.appendTo(log));
+                        //pb.redirectOutput(ProcessBuilder.Redirect.appendTo(log));
                         Process p = pb.start();
-                        assert pb.redirectInput() == ProcessBuilder.Redirect.PIPE;
-                        assert pb.redirectOutput().file() == log;
+                        //assert pb.redirectInput() == ProcessBuilder.Redirect.PIPE;
+                        //assert pb.redirectOutput().file() == log;
                         assert p.getInputStream().read() == -1;
                         //Analysisthread.interrupt();
                         throw new InterruptedException();
