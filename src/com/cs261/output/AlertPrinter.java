@@ -41,7 +41,6 @@ public class AlertPrinter {
             String oldFileName = alerts[alerts.length - 1].getName();
             String oldFileName2 = oldFileName.split(" ")[1];
             String oldId = oldFileName2.substring(0,oldFileName2.length() - 4);
-            System.out.println(oldFileName + " | " + oldFileName2 + " | " + oldId);
             this.id = Integer.parseInt(oldId) + 1;
         }
         try {

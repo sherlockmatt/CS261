@@ -19,7 +19,7 @@ if ($_POST['Select'] == 'Trades'){
 	$day = substr($_POST['date'], 6);
 	echo  "<div id='spinner'class='spinner' style='display:none;'> <img id='img-spinner' src='image/spin.gif' alt='Loading'/> </div>";
 	$query = "Trades ".$year." ".$month." ".$day." ".$startTime;
-	if(!exec('java -cp sherlockmatt.uwcs.co.uk/CS261/DBA.jar com.cs261.output.QueryPrinter '.$query.'', $output))
+	if(!exec('java -cp DBA.jar com.cs261.output.QueryPrinter '.$query.'', $output))
 	{
 		echo "Files are not stored. Due to limited space in the server. Sorry";
 	}
@@ -39,7 +39,7 @@ else if ($_POST['Select'] == 'Communications'){
 	$day = substr($_POST['date'], 6);
 	echo  "<div id='spinner'class='spinner' style='display:none;'> <img id='img-spinner' src='image/spin.gif' alt='Loading'/> </div>";
 	$query = "Comms ".$year." ".$month." ".$day." ".$startTime;
-	if(!exec('java -cp sherlockmatt.uwcs.co.uk/CS261/DBA.jar com.cs261.output.QueryPrinter '.$query.'', $output))
+	if(!exec('java -cp DBA.jar com.cs261.output.QueryPrinter '.$query.'', $output))
 	{
 		echo "Files are not stored. Due to limited space in the server. Sorry";
 	}

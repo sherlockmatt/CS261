@@ -15,9 +15,11 @@ public class Graph {
     public void addNode(String[] content, int x, int y, int radius) {
         Node n1 = new Node(cntr++, content, x, y);
         nodes.add(n1);
-        for (Node n2 : getNodesInRadius(n1, radius)) {
-            n1.addEdge(n2);
-            n2.addEdge(n1);
+        if (n1.getEdgeCount() > 0) {
+            for (Node n2 : getNodesInRadius(n1, radius)) {
+                n1.addEdge(n2);
+                n2.addEdge(n1);
+            }
         }
     }
 
