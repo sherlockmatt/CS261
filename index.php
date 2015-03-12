@@ -201,7 +201,7 @@
 			<option value='23:00:00-24:00:00'>23.00 - 24.00</option>
 			
 		</select>
-      	  <img class="logfiles" src="logfiles.gif" alt="Log File Icon">
+      	  <img class="logfiles" src="image/logfiles.gif" alt="Log File Icon">
 	 <input type="button" class='submitbutton' id="searchForm" onClick="SubmitForm();" value="Submit" />
          </form>
 	</div>
