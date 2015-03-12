@@ -37,6 +37,7 @@ public class CommsThread implements Runnable {
             Analyser analyser = new Analyser("Comms", Reference.RADIUS);
             boolean analyse = true;
             boolean ignoreFirst = true;
+            int i = 0;            
 
             history = new HashMap<String, HashMap<String, List<Integer>>>();
 
@@ -50,7 +51,7 @@ public class CommsThread implements Runnable {
                 while ((lineinput = tradesocket.readLine()) != null) {
                     lineseperated = lineinput.split(","); // Splits the read line into individual data.
                     // Output to csv file, note that to separate columns need to use a "," and to separate rows per println.
-                    for (int i = 0; i < lineseperated.length; i++) {
+                    for (i = 0; i < lineseperated.length; i++) {
                         outputTrades.append(lineseperated[i]);
                         if (i == lineseperated.length - 1) {
                             outputTrades.append("\n");
@@ -108,6 +109,14 @@ public class CommsThread implements Runnable {
                 }
             } catch (InterruptedException e) {
                 System.out.println("Ctrl-c caught (trades)");
+                for (; i < lineseperated.length; i++) {
+                    outputTrades.append(lineseperated[i]);
+                    if (i == lineseperated.length - 1) {
+                        outputTrades.append("\n");
+                    } else {
+                        outputTrades.append(",");
+                    }
+                }
             } finally { // Runs after try whether success or fail.
                 outputTrades.close(); // Close link to file output.
                 echoSocket.close(); // Close link to socket.
