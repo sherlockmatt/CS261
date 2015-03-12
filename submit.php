@@ -15,7 +15,6 @@ if ($_POST['Select'] == 'Trades'){
 		for ($i = 0; $i <= sizeof($output)-1; $i++)
 		{
 			echo $output[$i];
-			
 		}
 	}
 }
