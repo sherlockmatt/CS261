@@ -10,7 +10,8 @@
 				var Select = document.forms["pInfo"]["Select"].value;
 				var time = document.forms["pInfo"]["time"].value;
 				var date = document.forms["pInfo"]["dAte"].value;
-				
+				$('#spinner').show();
+
 				if (Select == null || Select == "" || time == null || time =="" || date == "null" || date == "" ) {
 						 alert("Please Select trades or communication, Date and Time. Thank You");
 						 return false;
@@ -32,6 +33,18 @@
 				 });
 			}
     </script>
+        <script type="text/javascript">
+			$(document).ready(function(){
+				$("#spinner").bind("ajaxSend", function() {
+					$(this).show();
+				}).bind("ajaxStop", function() {
+					$(this).hide();
+				}).bind("ajaxError", function() {
+					$(this).hide();
+				});
+			 
+			});
+	</script>
  	</head>
 	<body>
 	<?php include 'submit.php'; ?>
@@ -216,6 +229,9 @@
 			 echo $firstPageDesign;
 	
 		?>
+             <div id="spinner" class="spinner" style="display:none;">
+               		 <img id="img-spinner" src="image/spin.gif" alt="Loading"/>
+             </div>
 	</div>
 	<div id='helpOverlay'>
 		<script type="text/javascript"> 

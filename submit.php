@@ -1,3 +1,15 @@
+<script type="text/javascript">
+			$(document).ready(function(){
+				$("#spinner").bind("ajaxSend", function() {
+					$(this).show();
+				}).bind("ajaxStop", function() {
+					$(this).hide();
+				}).bind("ajaxError", function() {
+					$(this).hide();
+				});
+			 
+			});
+</script>
 <?php 
 if ($_POST['Select'] == 'Trades'){
 	$startTime = substr($_POST['time'], 0,2);
@@ -5,6 +17,7 @@ if ($_POST['Select'] == 'Trades'){
 	$year = substr($_POST['date'], 0 ,4);
 	$month = substr($_POST['date'], 4 ,-2);
 	$day = substr($_POST['date'], 6);
+	echo  "<div id='spinner'class='spinner' style='display:none;'> <img id='img-spinner' src='image/spin.gif' alt='Loading'/> </div>";
 	$query = "Trades ".$year." ".$month." ".$day." ".$startTime;
 	if(!exec('java -cp sherlockmatt.uwcs.co.uk/CS261/DBA.jar com.cs261.output.QueryPrinter '.$query.'', $output))
 	{
@@ -24,6 +37,7 @@ else if ($_POST['Select'] == 'Communications'){
 	$year = substr($_POST['date'], 0 ,4);
 	$month = substr($_POST['date'], 4 ,-2);
 	$day = substr($_POST['date'], 6);
+	echo  "<div id='spinner'class='spinner' style='display:none;'> <img id='img-spinner' src='image/spin.gif' alt='Loading'/> </div>";
 	$query = "Comms ".$year." ".$month." ".$day." ".$startTime;
 	if(!exec('java -cp sherlockmatt.uwcs.co.uk/CS261/DBA.jar com.cs261.output.QueryPrinter '.$query.'', $output))
 	{
