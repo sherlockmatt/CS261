@@ -6,15 +6,16 @@ if ($_POST['Select'] == 'Trades'){
 	$month = substr($_POST['date'], 4 ,-2);
 	$day = substr($_POST['date'], 6);
 	$query = "Trades ".$year." ".$month." ".$day." ".$startTime;
-	exec('java -cp sherlockmatt.uwcs.co.uk/CS261/DBA.jar com.cs261.output.QueryPrinter '.$query.'', $output,$return);
-	if (!exec('java -cp DBA.jar com.cs261.output.QueryPrinter '.$query.'', $output,$return))
+	if(!exec('java -cp sherlockmatt.uwcs.co.uk/CS261/DBA.jar com.cs261.output.QueryPrinter '.$query.'', $output))
 	{
-	echo "failed";
+		echo "Files are not stored. Due to limited space in the server. Sorry";
 	}
-		echo $return;
-	for ($i = 0; $i <= sizeof($output)-1; $i++)
+	else 
 	{
-		echo $output[$i];
+		for ($i = 0; $i <= sizeof($output)-1; $i++)
+		{
+			echo $output[$i];
+		}
 	}
 }
 else if ($_POST['Select'] == 'Communications'){
@@ -24,13 +25,18 @@ else if ($_POST['Select'] == 'Communications'){
 	$month = substr($_POST['date'], 4 ,-2);
 	$day = substr($_POST['date'], 6);
 	$query = "Comms ".$year." ".$month." ".$day." ".$startTime;
-	exec('java -cp DBA.jar com.cs261.output.QueryPrinter '.$query.'', $output);
-	for ($i = 0; $i <= sizeof($output)-1; $i++)
+	if(!exec('java -cp sherlockmatt.uwcs.co.uk/CS261/DBA.jar com.cs261.output.QueryPrinter '.$query.'', $output))
 	{
-		echo $output[$i];
+		echo "Files are not stored. Due to limited space in the server. Sorry";
+	}
+	else 
+	{
+		for ($i = 0; $i <= sizeof($output)-1; $i++)
+		{
+			echo $output[$i];
+		}
 	}
 }
-
 else if ($_POST['Select'] == 'alerts')
 {
 	error_reporting(0);
