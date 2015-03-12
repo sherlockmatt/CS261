@@ -9,8 +9,9 @@ if ($_POST['Select'] == 'Trades'){
 	exec('java -cp sherlockmatt.uwcs.co.uk/CS261/DBA.jar com.cs261.output.QueryPrinter '.$query.'', $output,$return);
 	if (sizeof($output) == 0 )
 	{
-	echo no return;
+	echo "no return";
 	}
+		echo $return;
 	for ($i = 0; $i <= sizeof($output)-1; $i++)
 	{
 		echo $output[$i];
