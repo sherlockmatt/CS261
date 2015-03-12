@@ -1,7 +1,6 @@
 package com.cs261.input;
 
 import com.cs261.analysis.Analyser;
-import com.cs261.main.Main;
 import com.cs261.main.Reference;
 import com.cs261.output.AlertPrinter;
 
@@ -43,20 +42,20 @@ public class TradesThread implements Runnable {
             int i = 0;
             calcAverages();
 
+            String lineinput; // String to hold each line read in.
+            String[] lineseperated = new String[10]; // String array to separate into individual data e.g. date, buyer, seller
             try {
                 BufferedReader tradesocket = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
                 // Begin reading from socket.
-                String lineinput; // String to hold each line read in.
-                String[] lineseperated; // String array to separate into individual data e.g. date, buyer, seller
                 if (DoesExist) {
                     lineinput = tradesocket.readLine(); // ignore first line if appending to file
                 }
                 while ((lineinput = tradesocket.readLine()) != null) {
                     lineseperated = lineinput.split(","); // Splits the read line into individual data.
                     // Output to csv file, note that to separate columns need to use a "," and to separate rows per println.
-                    for (int i = 0; i < lineseperated.length; i++) {
-                        outputTrades.append(lineseperated[i]);
-                        if (i == lineseperated.length - 1) {
+                    for (int num = 0; num < lineseperated.length; num++) {
+                        outputTrades.append(lineseperated[num]);
+                        if (num == lineseperated.length - 1) {
                             outputTrades.append("\n");
                         } else {
                             outputTrades.append(",");
@@ -67,8 +66,8 @@ public class TradesThread implements Runnable {
                                 + Integer.parseInt(lineseperated[0].substring(14, 16)) * 60
                                 + Integer.parseInt(lineseperated[0].substring(17, 19));
                         int y = 0;
-                        for (int i = 1; i < 14; i++) {
-                            int date = Integer.parseInt(lineseperated[0].substring(8, 10)) - i;
+                        for (int j = 1; j < 14; j++) {
+                            int date = Integer.parseInt(lineseperated[0].substring(8, 10)) - j;
                             if (tradesAverages.containsKey(date)) {
                                 HashMap<String, Double> dateMap = tradesAverages.get(date);
                                 Double avg = dateMap.get(lineseperated[6]);
@@ -90,9 +89,9 @@ public class TradesThread implements Runnable {
                 }
             } catch (InterruptedException e) {
                 System.out.println("Ctrl-c caught (trades)");
-                for (; i < lineseperated.length; i++) {
-                    outputTrades.append(lineseperated[i]);
-                    if (i == lineseperated.length - 1) {
+                for (int j = 0; j < lineseperated.length; j++) {
+                    outputTrades.append(lineseperated[j]);
+                    if (j == lineseperated.length - 1) {
                         outputTrades.append("\n");
                     } else {
                         outputTrades.append(",");

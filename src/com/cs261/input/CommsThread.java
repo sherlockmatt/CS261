@@ -40,10 +40,10 @@ public class CommsThread implements Runnable {
 
             HashMap<String, HashMap<String, List<Integer>>> history = new HashMap<String, HashMap<String, List<Integer>>>();
 
+            String lineinput; // String to hold each line read in.
+            String[] lineseperated = new String[10]; // String array to separate into individual data e.g. date, buyer, seller
             try {
                 BufferedReader tradesocket = new BufferedReader(new InputStreamReader(echoSocket.getInputStream())); // Begin reading from socket.
-                String lineinput; // String to hold each line read in.
-                String[] lineseperated; // String array to separate into individual data e.g. date, buyer, seller
                 if (DoesExist) {
                     lineinput = tradesocket.readLine(); // ignore first line if appending to file
                 }
@@ -79,9 +79,9 @@ public class CommsThread implements Runnable {
                                 if (history.get(trader1).containsKey(trader2)) {
                                     List<Integer> list = new ArrayList<Integer>();
                                     list.addAll(history.get(trader1).get(trader2));
-                                    for (Integer i : list) {
-                                        if (((i - Integer.parseInt(lineseperated[0].substring(17, 19))) + 60) % 60 > 5) {
-                                            history.get(trader1).get(trader2).remove(i);
+                                    for (Integer num : list) {
+                                        if (((num - Integer.parseInt(lineseperated[0].substring(17, 19))) + 60) % 60 > 5) {
+                                            history.get(trader1).get(trader2).remove(num);
                                         } else {
                                             y++;
                                         }
@@ -110,9 +110,9 @@ public class CommsThread implements Runnable {
                 }
             } catch (InterruptedException e) {
                 System.out.println("Ctrl-c caught (trades)");
-                for (; i < lineseperated.length; i++) {
-                    outputTrades.append(lineseperated[i]);
-                    if (i == lineseperated.length - 1) {
+                for (int j = 0; j < lineseperated.length; j++) {
+                    outputTrades.append(lineseperated[j]);
+                    if (j == lineseperated.length - 1) {
                         outputTrades.append("\n");
                     } else {
                         outputTrades.append(",");
