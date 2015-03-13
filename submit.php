@@ -73,6 +73,7 @@ else if ($_POST['Select'] == 'Communications'){
 else if ($_POST['Select'] == 'alerts')
 {
 	error_reporting(0);
+	echo  "<div id='spinner'class='spinner' style='display:none;'> <img id='img-spinner' src='image/spin.gif' alt='Loading'/> </div>";
 	if( substr($_POST['name'],0,4) == "Trades") {
 		$fileName = $_POST['name'];
 		try {
@@ -95,7 +96,7 @@ else if ($_POST['Select'] == 'alerts')
 else if ($_POST['Select'] == "remove"){
 	error_reporting(0);
 	$removeAlert = $_POST['alerts'];
-	
+	echo  "<div id='spinner'class='spinner' style='display:none;'> <img id='img-spinner' src='image/spin.gif' alt='Loading'/> </div>";
 	if (rename("alerts/".$removeAlert."", "Remove/".$removeAlert."") === false)
 	{
 		echo "</br>File had been deleted by other users. Please check the archive folder";
@@ -105,6 +106,7 @@ else if ($_POST['Select'] == "remove"){
 else if ($_POST['Select'] == "log")
 {
 	error_reporting(0);
+	echo  "<div id='spinner'class='spinner' style='display:none;'> <img id='img-spinner' src='image/spin.gif' alt='Loading'/> </div>";
  		try {
 				readLog();
 			
