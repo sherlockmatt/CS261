@@ -19,8 +19,6 @@ public class TradesThread implements Runnable {
 
     public void run() { // Threads running code.
         try {
-            System.out.println("In the trades thread");
-
             DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
             //get current date time with Date()
             Date currentdate = new Date();
@@ -39,7 +37,6 @@ public class TradesThread implements Runnable {
             Analyser analyser = new Analyser("Trades", Reference.RADIUS);
             boolean analyse = true;
             boolean ignoreFirst = true;
-            int i = 0;
             calcAverages();
 
             String lineinput; // String to hold each line read in.
@@ -88,15 +85,8 @@ public class TradesThread implements Runnable {
                     }
                 }
             } catch (InterruptedException e) {
-                System.out.println("Ctrl-c caught (trades)");
-                for (int j = 0; j < lineseperated.length; j++) {
-                    outputTrades.append(lineseperated[j]);
-                    if (j == lineseperated.length - 1) {
-                        outputTrades.append("\n");
-                    } else {
-                        outputTrades.append(",");
-                    }
-                }
+                outputTrades.close(); // Close link to file output.
+                echoSocket.close(); // Close link to socket.
             } finally { // Runs after try whether success or fail.
                 outputTrades.close(); // Close link to file output.
                 echoSocket.close(); // Close link to socket.

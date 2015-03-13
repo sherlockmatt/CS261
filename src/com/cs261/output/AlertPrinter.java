@@ -25,6 +25,7 @@ public class AlertPrinter {
         try {
             BufferedReader br = new BufferedReader(new FileReader("data/" + dateStr + type.toLowerCase() + "store.csv"));
             headers = br.readLine().split(",");
+            br.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,28 +41,28 @@ public class AlertPrinter {
         if (alerts.length > 0) {
             String oldFileName = alerts[alerts.length - 1].getName();
             String oldFileName2 = oldFileName.split(" ")[1];
-            String oldId = oldFileName2.substring(0,oldFileName2.length() - 4);
+            String oldId = oldFileName2.substring(0, oldFileName2.length() - 4);
             this.id = Integer.parseInt(oldId) + 1;
         }
         try {
             PrintWriter outputFile = new PrintWriter(new FileWriter("alerts/" + type + " " + id + ".csv", true));
 
             for (int i = 0; i < headers.length; i++) {
-                outputFile.append(headers[i]);
+                outputFile.print(headers[i]);
                 if (i == headers.length - 1) {
-                    outputFile.append("\n");
+                    outputFile.println();
                 } else {
-                    outputFile.append(",");
+                    outputFile.print(",");
                 }
             }
 
             for (Node node : nodes) {
                 for (int i = 0; i < node.getContent().length; i++) {
-                    outputFile.append(node.getContent()[i]);
+                    outputFile.print(node.getContent()[i]);
                     if (i == node.getContent().length - 1) {
-                        outputFile.append("\n");
+                        outputFile.println();
                     } else {
-                        outputFile.append(",");
+                        outputFile.print(",");
                     }
                 }
             }

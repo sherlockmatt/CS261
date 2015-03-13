@@ -16,8 +16,6 @@ public class CommsThread implements Runnable {
 
     public void run() { // Threads running code.
         try {
-            System.out.println("In the comms thread");
-
             DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
             //get current date time with Date()
             Date currentdate = new Date();
@@ -36,7 +34,7 @@ public class CommsThread implements Runnable {
             Analyser analyser = new Analyser("Comms", Reference.RADIUS);
             boolean analyse = true;
             boolean ignoreFirst = true;
-            int i = 0;            
+            int i = 0;
 
             HashMap<String, HashMap<String, List<Integer>>> history = new HashMap<String, HashMap<String, List<Integer>>>();
 
@@ -109,15 +107,8 @@ public class CommsThread implements Runnable {
                     }
                 }
             } catch (InterruptedException e) {
-                System.out.println("Ctrl-c caught (trades)");
-                for (int j = 0; j < lineseperated.length; j++) {
-                    outputTrades.append(lineseperated[j]);
-                    if (j == lineseperated.length - 1) {
-                        outputTrades.append("\n");
-                    } else {
-                        outputTrades.append(",");
-                    }
-                }
+                outputTrades.close(); // Close link to file output.
+                echoSocket.close(); // Close link to socket.
             } finally { // Runs after try whether success or fail.
                 outputTrades.close(); // Close link to file output.
                 echoSocket.close(); // Close link to socket.
