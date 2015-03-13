@@ -9,7 +9,7 @@ import java.util.Calendar;
 
 public class QueryPrinter {
 
-    public static void main(String[] args) { //Call this like "java -jar class type year month date time" N.B. time should be the hour only i.e. 17
+    public static void main(String[] args) { //Call this like "java -cp DBA.jar com.cs261.output.QueryPrinter type year month date time" N.B. time should be the hour only i.e. 17
         String type = args[0];
         String year = args[1];
         String month = args[2];
@@ -17,10 +17,10 @@ public class QueryPrinter {
         String time = args[4];
         Calendar cal = Calendar.getInstance();
         cal.set(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(date));
+        int[] widths = type.equals("Trades") ? Reference.WIDTHS_TRADES : Reference.WIDTHS_COMMS;
         try {
             BufferedReader br = new BufferedReader(new FileReader("data/" + year + month + date + type.toLowerCase() + "store.csv"));
             String[] headers = br.readLine().split(",");
-            int[] widths = type.equals("Trades") ? Reference.WIDTHS_TRADES : Reference.WIDTHS_COMMS;
             int i = 0;
             System.out.println("<table id='comms' width=100%>");
             System.out.print("<tr>");
@@ -31,7 +31,7 @@ public class QueryPrinter {
             System.out.println("</tr>");
             String line;
             while ((line = br.readLine()) != null) {
-                if (line.split(",")[0].substring(11,13).equals(time)) {
+                if (line.split(",")[0].substring(11, 13).equals(time)) {
                     System.out.print("<tr>");
                     for (String s : line.split(",")) {
                         System.out.print("<td width='" + widths[i++] + "%;'>" + s + "</td>");
@@ -42,7 +42,13 @@ public class QueryPrinter {
             }
             System.out.println("</table>");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("<table id='comms' width=100%>");
+            System.out.print("<tr>");
+            int i = 0;
+            for (String s : (type.equals("Trades")) ? Reference.FAILED_TRADES : Reference.FAILED_COMMS) {
+                System.out.print("<td width='" + widths[i++] + "%;'>" + s + "</td>");
+            }
+            System.out.println("</tr>\n</table>");
         }
     }
 

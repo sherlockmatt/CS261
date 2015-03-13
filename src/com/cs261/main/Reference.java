@@ -2,7 +2,7 @@ package com.cs261.main;
 
 public class Reference {
 
-    public static final int TIME_INTERVAL = 5;
+    public static final int TIME_INTERVAL = 10;
 
     public static final int RADIUS = 10;
     public static final int CLUSTER_LOWER_BOUND = 3;

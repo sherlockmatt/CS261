@@ -13,8 +13,9 @@ public class Graph {
     }
 
     public void addNode(String[] content, int x, int y, int radius) {
-        Node n1 = new Node(cntr++, content, x, y);
+        Node n1 = new Node(content, x, y);
         nodes.add(n1);
+        cntr++;
         if (n1.getEdgeCount() > 0) {
             for (Node n2 : getNodesInRadius(n1, radius)) {
                 n1.addEdge(n2);
@@ -31,17 +32,10 @@ public class Graph {
         List<Node> tempNodes = new ArrayList<Node>();
         for (int i = 0; i < cntr; i++) {
             Node tempNode = nodes.get(i);
-            if (Math.sqrt((node.getX() - tempNode.getX())^2 + (node.getY() - tempNode.getY())^2) <= radius) {
+            if (Math.sqrt((node.getX() - tempNode.getX()) ^ 2 + (node.getY() - tempNode.getY()) ^ 2) <= radius) {
                 if (node != tempNode) tempNodes.add(tempNode);
             }
         }
         return tempNodes;
     }
-
-    public List<Node> getConnected(Node node) {
-        return node.getConnected();
-    }
-
-    public int getCount() { return cntr; }
-
 }

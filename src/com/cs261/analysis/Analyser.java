@@ -41,7 +41,7 @@ public class Analyser {
             }
             nodes.removeAll(connectedComponent);
             if (connectedComponent.size() > Reference.CLUSTER_LOWER_BOUND && connectedComponent.size() < Reference.CLUSTER_UPPER_BOUND) {
-                connectedComponent.add(new Node(-1, this.getType().equals("Trades") ? Reference.SEPERATOR_TRADES : Reference.SEPERATOR_COMMS, 0, 0));
+                connectedComponent.add(new Node(this.getType().equals("Trades") ? Reference.SEPERATOR_TRADES : Reference.SEPERATOR_COMMS, 0, 0));
                 output.addAll(connectedComponent);
             }
         }
