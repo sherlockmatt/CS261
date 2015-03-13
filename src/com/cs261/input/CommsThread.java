@@ -32,7 +32,7 @@ public class CommsThread implements Runnable {
             // Establish a socket using the chosen host and port.
 
             Analyser analyser = new Analyser("Comms", Reference.RADIUS);
-            boolean analyse = true;
+            boolean analyse = false;
             boolean ignoreFirst = true;
             int i = 0;
 

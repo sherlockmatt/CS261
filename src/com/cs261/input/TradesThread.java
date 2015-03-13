@@ -35,7 +35,7 @@ public class TradesThread implements Runnable {
             // Establish a socket using the chosen host and port.
 
             Analyser analyser = new Analyser("Trades", Reference.RADIUS);
-            boolean analyse = true;
+            boolean analyse = false;
             boolean ignoreFirst = true;
             calcAverages();
 

@@ -35,7 +35,7 @@ public class AlertPrinter {
         File[] alerts = new File("alerts").listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File file, String s) {
-                return s.matches("^" + type + " [0-9]+\\.csv$");
+                return s.matches("^" + type + ".+\\.csv");//return s.matches("^" + type + " [0-9]+\\.csv$");
             }
         });
         if (alerts.length > 0) {
@@ -43,9 +43,12 @@ public class AlertPrinter {
             String oldFileName2 = oldFileName.split(" ")[1];
             String oldId = oldFileName2.substring(0, oldFileName2.length() - 4);
             this.id = Integer.parseInt(oldId) + 1;
+            System.out.println(oldFileName + " | " + oldFileName2 + " | " + oldId + " | " + id);
         }
         try {
             PrintWriter outputFile = new PrintWriter(new FileWriter("alerts/" + type + " " + id + ".csv", true));
+
+            System.out.println("Printing!");
 
             for (int i = 0; i < headers.length; i++) {
                 outputFile.print(headers[i]);
@@ -66,6 +69,8 @@ public class AlertPrinter {
                     }
                 }
             }
+
+            outputFile.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
