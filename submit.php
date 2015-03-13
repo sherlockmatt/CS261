@@ -11,17 +11,23 @@
 			});
 </script>
 <?php 
+date_default_timezone_set('Europe/London');
 if ($_POST['Select'] == 'Trades'){
 	$startTime = substr($_POST['time'], 0,2);
 	$endTime =  substr($_POST['time'], 9,-6);
 	$year = substr($_POST['date'], 0 ,4);
 	$month = substr($_POST['date'], 4 ,-2);
 	$day = substr($_POST['date'], 6);
+	$queryDate = $day.'/'.$month.'/'.$year;
 	echo  "<div id='spinner'class='spinner' style='display:none;'> <img id='img-spinner' src='image/spin.gif' alt='Loading'/> </div>";
 	$query = "Trades ".$year." ".$month." ".$day." ".$startTime;
 	if(!exec('java -cp DBA.jar com.cs261.output.QueryPrinter '.$query.'', $output))
 	{
 		echo "Files are not stored. Due to limited space in the server. Sorry";
+		$file = fopen("logfile.csv","a");
+		$log = array ('Trades', $queryDate ,$_POST['time'],'Failed', date('m/d/Y h:i:s a', time()), "\r\n" );
+		fputcsv($file, $log);	
+		fclose($file);
 	}
 	else 
 	{
@@ -29,6 +35,10 @@ if ($_POST['Select'] == 'Trades'){
 		{
 			echo $output[$i];
 		}
+		$file = fopen("logfile.csv","a");
+		$log = array ('Trades', $queryDate ,$_POST['time'],'Success', date('m/d/Y h:i:s a', time()), "\r\n" );
+		fputcsv($file, $log);	
+		fclose($file);
 	}
 }
 else if ($_POST['Select'] == 'Communications'){
@@ -37,11 +47,16 @@ else if ($_POST['Select'] == 'Communications'){
 	$year = substr($_POST['date'], 0 ,4);
 	$month = substr($_POST['date'], 4 ,-2);
 	$day = substr($_POST['date'], 6);
+	$queryDate = $day.'/'.$month.'/'.$year;
 	echo  "<div id='spinner'class='spinner' style='display:none;'> <img id='img-spinner' src='image/spin.gif' alt='Loading'/> </div>";
 	$query = "Comms ".$year." ".$month." ".$day." ".$startTime;
 	if(!exec('java -cp DBA.jar com.cs261.output.QueryPrinter '.$query.'', $output))
 	{
 		echo "Files are not stored. Due to limited space in the server. Sorry";
+		$file = fopen("logfile.csv","a");
+		$log = array ('Communications', $queryDate ,$_POST['time'],'Failed', date('m/d/Y h:i:s a', time()), "\r\n" );
+		fputcsv($file, $log);	
+		fclose($file);
 	}
 	else 
 	{
@@ -49,6 +64,10 @@ else if ($_POST['Select'] == 'Communications'){
 		{
 			echo $output[$i];
 		}
+		$file = fopen("logfile.csv","a");
+		$log = array ('Communications', $queryDate ,$_POST['time'],'Success', date('m/d/Y h:i:s a', time()), "\r\n" );
+		fputcsv($file, $log);	
+		fclose($file);
 	}
 }
 else if ($_POST['Select'] == 'alerts')
@@ -83,6 +102,17 @@ else if ($_POST['Select'] == "remove"){
 	} 
 
 }
+else if ($_POST['Select'] == "log")
+{
+	error_reporting(0);
+ 		try {
+				readLog();
+			
+		} catch(Exception $e) {
+		  	  	echo $e->getMessage(), "\n";
+				}
+}
+
 
 function readSpecifcTimeTrades(&$fileName){
 
@@ -154,4 +184,34 @@ foreach ($alert as $a){
 	}
 }
 }
+function readLog() {
+
+if (fopen("logfile.csv", "r") === false)
+{	
+	throw new Exception('</br> No Log had been created yet');	
+}	
+else 
+{
+$file_handle = fopen("logfile.csv", "r") or die ("Cant get file");  // Search for the Csv file name, R means open for reading only; place the file pointer at the beginning of the file
+
+echo "<table id = 'log' style='width:100%;'>";
+echo "<tr> <th width='20%;'>Type of Search</th>";
+echo "<th width='20%;'>Date Searched</th>";
+echo "<th width='20%;'>Time Searched</th>" ; // Printing the results
+echo "<th width='20%;'>Status</th>" ; // Printing the results
+echo "<th width='20%;'>Time Stamp</th>" ; // Printing the results
+while (!feof($file_handle) ) { // While loop, to open all of the files 	
+$logs = fgetcsv($file_handle, 1024);  // Array of results
+ echo "<tr> <th width='20%;'> ".$logs[0]. "  </th>";
+ echo "<th width='20%;'> ".$logs[1] ." </th>";
+ echo "<th width='20%;'> ".$logs[2] ." </th>" ; // Printing the results
+  echo "<th width='20%;'> ".$logs[3] ." </th>" ; // Printing the results
+   echo "<th width='20%;'> ".$logs[4] ." </th>" ; // Printing the results
+ echo "</tr>";
+} 
+echo "</table>";
+fclose($file_handle); // close
+}}
+
+
 ?>
