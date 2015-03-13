@@ -33,6 +33,15 @@
 				 });
 			}
     </script>
+    <script>
+			function logs() {
+				var Select = "log";
+				$.post("submit.php", { Select: Select },
+				function(data) {
+						$(".query-form").html(data);
+				 });
+			}
+    </script>
         <script type="text/javascript">
 			$(document).ready(function(){
 				$("#spinner").bind("ajaxSend", function() {
@@ -201,7 +210,7 @@
 			<option value='23:00:00-24:00:00'>23.00 - 24.00</option>
 			
 		</select>
-      	  <img class="logfiles" src="image/logfiles.gif" alt="Log File Icon">
+      	  <a class=log href= 'javascript:;' onClick='logs();' > <img class="logfiles" src="image/logfiles.gif" alt="Log File Icon"> </a>
 	 <input type="button" class='submitbutton' id="searchForm" onClick="SubmitForm();" value="Submit" />
          </form>
 	</div>
@@ -225,7 +234,7 @@
 		</script>
 	</div>
     <?php 
-			 $firstPageDesign = "<div class='query-form'>Build your own Queries on the left :D";
+			 $firstPageDesign = "<div class='query-form'>";
 			 echo $firstPageDesign;
 	
 		?>
